@@ -1,0 +1,65 @@
+YORU / 1.4 — VERTICAL CITY RESEARCH
+31 October 2026. Sources consulted online; game rules are design interpretations.
+
+HONG KONG: A NETWORK, NOT A COLLECTION OF OVERPASSES
+The Hong Kong Highways Department describes the development of footbridges from
+crossings into connected elevated and underground pedestrian systems. Its example
+at Connaught Road matters because it links onward movement, rather than merely
+landing on the opposite pavement. Hongkong Land's Central walkway account places
+building-to-building connections at the origin of the network: hotel, shopping
+arcade and later commercial developments function as connected destinations.
+https://www.hyd.gov.hk/en/information_corner/hyd_factsheets/doc/e_Footbridges_and_Subways.pdf
+https://hkis.org.hk/archive/materials/category/20161125122120.0.pdf
+
+The Architectural Institute of Japan study of Central describes a network that
+expanded incrementally both horizontally and vertically, through mixed uses and
+public/private ownership. The design implication for Yoru is that a building can
+have a genuine public concourse, with doors at a particular elevation. Painting a
+highwalk through a module opens that passage; an ordinary private module remains
+a destination rather than an automatic through-route.
+https://www.jstage.jst.go.jp/article/aija/79/705/79_2479/_article/-char/en
+
+Hong Kong's Transport Department describes the Central–Mid-Levels system as a
+combination of covered walkways, reversible escalators and travelators. It operates
+as a sequence of transfers through a sloping city. Yoru adopts explicit transfer
+landings and route costs. Escalator schedules and real Hong Kong topography are
+not simulated in this release.
+https://www.td.gov.hk/en/transport_in_hong_kong/pedestrians/hillside_escalator/index.html
+
+LONDON: THE PODIUM BECOMES PUBLIC GROUND
+The City of London's Barbican landscape guidance treats the podium and highwalks
+as the principal public pedestrian environment. It also identifies wayfinding and
+the complexity of routes as material issues. The Barbican's own access guide
+separately identifies steps, lifts, ramps and highwalk connections. These are
+operating differences, not interchangeable symbols.
+
+Yoru therefore provides a floor plan for each stratum, persistent floor addresses,
+labelled transfer destinations, a full-stack view and a cut above the active level.
+The concrete slab is useful elevated land on which gardens, homes, markets and
+workplaces can coexist. Pedestrians use highwalks and road pavements; goods streets
+are a separate graph. A bridge crossing over another route does not create a node.
+https://www.cityoflondon.gov.uk/assets/Services-Environment/spd-barbican-estate-listed-building-management-guidelines-volume-IV.pdf
+https://www.barbican.org.uk/sites/default/files/documents/2024-06/Access%20Guide%20Feb%202024%20update%20v3.pdf
+
+NEWCASTLE: STRUCTURE, STREET AND PUBLIC DECK TOGETHER
+Historic England's MEA House listing describes a building suspended from roof
+beams and concrete service cores, freeing space over the road. Its first-floor
+public deck was designed to join Newcastle's wider elevated system; ramp and
+motorway-crossing connections were added subsequently. The local authority's
+heritage record also identifies the long ramp to the pedestrian deck.
+
+This suggests two independent questions for the game: what holds a deck up, and
+what makes it reachable? A supported but isolated floor is not a functioning
+neighbourhood. Cores provide bearing, while stairs, lifts and ramps provide access.
+Remove a foundation and the support path breaks. Close a transfer or cut power
+to a lift and movement must reroute or fail.
+https://historicengland.org.uk/listing/the-list/list-entry/1419279
+https://sitelines.newcastle.gov.uk/node/46901
+
+IMPLEMENTATION BOUNDARY
+Thirteen strata, four-tile deck spans, connector capacities, electrical demands
+and travel costs are fictional game parameters, not measurements or engineering
+standards derived from these buildings. A stratum is a modular band of programmes,
+not one literal residential storey. The game models bearing reach, route topology,
+capacity and powered transfers; it does not solve structural loads, fire egress,
+individual disability access, hydraulic pressure or a real city's regulations.

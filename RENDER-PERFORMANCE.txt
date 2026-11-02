@@ -1,0 +1,692 @@
+YORU / TOKYO 1.26.0 — CONSTRUCTION BATCHING
+
+Dragging a building brush performs one model forecast on release. Individual
+placements stage normal paid buildings and initial inventory without forecasting
+the entire city after every tile. A stroke takes one undo snapshot. The preview
+memoizes its placement explanation against forecast, brush revision, location,
+type, credits and Free Build mode, avoiding repeated connector-clearance scans
+while the pointer stays still. These changes also apply to the floor-plan view.
+
+The previous renderer, shaders, quality settings, spatial culling, retained
+meshes and world-anchored optical history remain. No new frame-rate percentage
+is claimed for this construction usability update.
+
+Earlier measurements and release notes follow.
+
+YORU / TOKYO 1.25.0 — FOUR LINKED VERTICAL QUARTERS
+
+The demo fills a 154 x 70 footprint with four translated copies of the original
+77 x 35 authored layout and joins them with real inter-quarter infrastructure.
+Utility seams keep the original smaller supply graphs; additional local feeds
+preserve the boundary homes. Ground rail and public skyways remain connected.
+No simulation algorithm, renderer, shader or feedback resolution is changed.
+
+The expanded city contains 14,931 cells, 2,592 buildings and 1,546 transfers.
+Existing culling, retained meshes, shared curve corners, static image caches,
+background forecasts and world-anchored optics continue to apply. Wider zoom
+and fit now allow 0.08, so even a small window can fit the expanded footprint.
+A native full-city camera benchmark is recorded in build/expanded25-render.json.
+The larger demo contains four times the buildings; earlier frame-rate figures
+below describe their original city and workload, not this expanded workload.
+
+Model checks maintain full food, power and water coverage, with no unsupported
+or overloaded members over three subsequent ticks. See expanded25-validation.json
+and the model/native logs. The previous save is never used as a scratch file.
+
+Earlier performance reports follow.
+
+YORU / TOKYO 1.24.0 — CONTINUOUS CAMERA FEEDBACK
+
+The feedback pass maps current UV coordinates, after local advection, into the
+previous camera's view of the same world point. Scale accounts for both zoom
+and logical viewport dimensions; translation uses camera-relative coordinates.
+Out-of-bounds history contributes no light, preventing edge smears. Camera
+navigation does not clear history. Explicit view/stratum changes and authored
+layout changes retain their existing reset behaviour.
+
+Source identities are chosen from city components without viewport clipping or
+camera-dependent resampling. The source limit remains 32, and inactive sources
+retain their slot at zero intensity. Existing field caching and all retained
+geometry, network corner tables, batching and frame targets remain.
+
+The change adds one four-value uniform and a few arithmetic operations to the
+existing feedback shader. It adds no rendering pass or simulation work and
+retains all scene/feedback formats, target sizes and quality controls. A fresh
+full-city camera benchmark is recorded in build/optics24-render.json; it is a
+regression check, not a new measured FPS claim.
+
+GPU validation seeds a real feedback texture, removes its incoming scene light,
+then follows the retained patch through panning, zoom in/out and logical viewport
+rescaling. Its measured centroid follows independent world coordinates. A large
+pan and return leave no stretched border or stale ghost. Native cache checks
+also assert that actual Interface camera and zoom changes do not reset history.
+Unit checks cover source-slot stability, remote world coordinates and affine
+projection, with unchanged authored city state. See optics24-validation.json.
+
+Earlier performance reports follow.
+
+YORU / TOKYO 1.23.0 — RETAINED TRANSFERS AND SHARED CURVE CORNERS
+
+MEASURED RESULT
+Saved 18,640-person / 648-building / 382-transfer / L0–L12 city, tick 12696.
+Two alternating runs per release on the same copied input, 1380x790 logical /
+2760x1580 physical, Balanced 2070x1185 scene. Original 4x MSAA request, shaders,
+feedback formats, city density and detail error bound retained.
+
+                                 1.22                1.23
+Playing mean per-run FPS          44.66               68.93
+Animated camera mean FPS          44.57               72.50
+
+Playing rises 54.3%; animated overview/crown/pan rises 62.7%. Animated samples
+exclude four warmup frames in each 24-frame camera phase. Playing samples include
+all frames after the initial four, including forecast publication, and each run
+commits exactly three ticks. All four playing saves have the same SHA-256:
+ff4e4c8f4ca5f8c7b2cdb7c4faf71512bf7311fa7d53df5b9418a642821b87c1
+
+NORMAL PRESENTATION
+The new --paced-benchmark diagnostic uses normal VSync and the 60-FPS software
+limit, at the normally fitted 1380x810 logical / 2760x1620 physical window. Its
+384 post-startup frames average 56.16 FPS, median 16.93 ms, P95 22.04 ms,
+P99 29.38 ms. The worst frame is 134.91 ms, during initial presentation at
+sample 10. This result does not establish a locked 60 FPS on this shared host.
+Visible unfocused windows now use the same 60-FPS target as focused windows;
+the previous 15-FPS visible-window restriction is removed. Minimized windows
+use 5 FPS. No other Yoru instance runs during these checks.
+
+RENDERER
+Static transfer triangles upload once per changed connector appearance, zoom,
+stratum, viewport or camera rebase. A camera-relative translation reuses them
+during pans. Rebasing at 128-tile boundaries limits near-camera floating-point
+error. Endpoints retain their 36-segment circles. Cabins, escalator treads,
+moving-walk bars, selected journeys and drafting previews remain live.
+
+Prepared assets use the existing monotonic forecastRevision plus live topology,
+view and UI inputs. Every worker publication, evaluation, undo and load supplies
+a fresh forecast identity. In-progress painting also hashes its complete live
+appearance. The flow diagnostic explicitly invalidates direct mutations to
+derived maps, since those intentionally bypass City::evaluate.
+
+Network vertices read direction/phase/strand/segment corner positions from a
+small rotating lookup texture. Corners share the original bend and normal
+formula. Static carrier corners are calculated when their mesh is built;
+travelling points retain their existing GPU time equation. Per-link colours,
+activation thresholds, filtered indices and remote camera-relative chunks remain.
+YORU_LEGACY_NETWORK=1 selects the prior vertex equations for diagnostics.
+
+Four- and eight-segment buckets fill gaps in the former 6/10/14 scheme while
+retaining the same 0.35-physical-pixel simplification bound. The measured crown
+submits 500,448 vertices instead of 611,360 (18.1% fewer); moving-camera averages
+1,235,910 instead of 1,503,507.6 (17.8% fewer). The fitted overview stays at six
+segments. Both releases use the same scene resolution and effects.
+
+VALIDATION AND EVIDENCE
+1,737,565 rendering checks include independent original corner equations,
+all five tessellation buckets, colour bytes, culling and remote coordinates.
+Native cache checks include edit/material/undo/load invalidation, picking,
+quality/resize/view changes and reuse of transfer triangles through a pan.
+Static and animated transfer passes can change thin-stroke overlap at crossings;
+curve rasterization can vary within the existing error bound.
+
+Model, simulation worker, CityMachine and all optical shader sources match 1.22
+byte-for-byte. Actual saves are independently SHA-256 checked. No city rebuild
+or save migration is part of this release. See build/fps23-comparison.json,
+fps23-runs.json, fps23-preservation.json, fps23-render-tests.log and native logs.
+
+Reproduce with isolated copied input in YORU_DATA_DIR:
+  YoruTokyo --fit --size 1380x790 --render-benchmark render.json
+  YoruTokyo --fit --size 1380x790 --play-benchmark playing.json
+  YoruTokyo --fit --size 1600x1000 --paced-benchmark paced.json
+The last viewport is fitted to the connected monitor. GPU completion profiling
+is separate and excluded from throughput runs. Experimental no-MSAA runs did
+not establish a worthwhile gain; production retains the original MSAA request.
+
+Earlier release measurements follow.
+
+YORU / TOKYO 1.22.0 — STREAM TRANSIENT GPU BATCHES
+
+MEASURED RESULT
+Uncapped native runs on the saved 18,640-person, 648-building, L0–L12 city.
+1380x790 logical / 2760x1580 physical, Balanced 2070x1185 scene, original 4x MSAA request,
+original detail, shaders and effects. No other Yoru process runs during samples.
+
+                                  Previous uploads       Streaming
+Playing / mean per-run FPS               12.1                 40.4
+Animated overview/crown/pan FPS          17.2                 43.3
+
+Playing throughput rises 233%; animated views rise 152%. The playing set contains
+three runs per upload mode: two alternating runs of each release and a separate
+same-binary pair. All commit exactly three ticks from identical input. Animation
+uses two runs per release, twenty post-warmup samples in each of three camera
+phases per run. The first four frames of each phase are excluded; playing excludes
+its first four startup frames. Normal foreground/background frame limits remain.
+
+The independent same-binary playing pair measures 12.83 / 34.72 FPS (+171%).
+A stationary cached overview/crown pair measures 32.31 / 96.90 FPS (+200%), with
+all forty sampled city images reused in each mode. Normal foreground play still
+caps at 60 FPS. Host load varies; these measurements describe this city and host.
+
+CHANGE
+The default immediate render batch previously wrote positions, UVs, normals and
+colours into storage that earlier draws could still be reading. The local rlgl
+patch allocates fresh GL_STREAM_DRAW storage for each used input stream and
+uploads only the used vertex prefix. Attributes optimized out of the active
+shader do not require an upload. GPU-retained network meshes, index buffers,
+curve tables, scene/feedback formats and all shader mathematics remain unchanged.
+The original batch-buffer count is retained. YORU_STREAM_BATCH enables this local
+patch in CMake; YORU_BATCH_LEGACY=1 selects the original path for comparison.
+
+CORRECTNESS
+Six raw scene hashes match both the previous renderer and the same-binary legacy
+mode, including service recolouring, sub-byte changes, outage and restoration.
+Six full native-resolution optical composites also match byte-for-byte at a
+fixed 1/60-second feedback step. The existing flow check supports diagnostic
+YORU_BATCH_OPTICS=1 for that comparison. No optical quality setting is reduced.
+All six playing runs produce byte-identical saved cities after their three ticks.
+The 1,326,301 rendering checks and native cache, minimal-UI, diagram, route,
+transport and district checks pass. Original saves are protected by isolated data
+folders and SHA-256 verification.
+
+REPRODUCTION
+Run from a copy of the saved city in YORU_DATA_DIR, using --fit --size 1380x790.
+Use --play-benchmark FILE for three ticks or --render-benchmark FILE for camera
+phases. Set YORU_BATCH_LEGACY=1 for the previous upload path in the same executable.
+Set YORU_BENCHMARK_STILL=1 for stationary cached views. Set YORU_BATCH_OPTICS=1 with
+--flow-update-check for fixed-clock full-optics hashes. GPU completion profiling
+is a separate diagnostic and is excluded from the throughput comparisons.
+
+Evidence: build/fps22-comparison.json, fps22-ab-runs.json,
+fps22-same-binary-verification.json, fps22-pixel-equivalence.json, native logs,
+and the individual fps22 render/play JSON samples. Earlier measurements follow.
+
+1.21 / AGGREGATED LIFT SERVICES AND DAILY DEMAND
+
+Lift bank membership is prepared once per forecast. A shaft has at most thirteen
+physical landing levels; through-ride links reuse that small graph and share
+finite car time. Selected stops never allocate new tile geometry. Failed dispatch
+can perform one relaxed search to identify its first binding lift; this work stays
+inside the background forecast, not the drawing loop. Empty bank lists skip it.
+
+Queue markers use completed aggregate records and draw at most 64 visible rows.
+Bank controls remain in the existing scrollable inspector. District trace analysis
+retains its bounded background job and 96-path overlay; the minimal default HUD,
+render quality, scene caching, shader settings and abstract forms are retained.
+This release makes no unmeasured claim of a higher frame rate.
+
+1.20 / DISTRICT OWNERSHIP AND BACKGROUND TRACING
+
+District membership is indexed by floor once per forecast over existing sparse
+tiles. Budgets, priorities and reserves reuse the existing dispatch graphs and
+capacity accounting. No per-tile district geometry is allocated for empty space.
+A city without custom districts takes the original dispatch paths.
+
+District tracing reads completed utility, shipment, journey and gateway ledgers.
+One background City snapshot computes balances, partners and shared links; stale
+requests cannot publish. Its file path is cleared and the snapshot is read-only.
+There is no new route search or simulation in the drawing loop. The existing
+scene caches remain available, with a light volume outline and separate route
+overlay. Analysis is cached by forecast, district, channel and internal-route mode.
+The overlay is bounded to 96 paths; pagination and isolation expose every route.
+
+This release adds simulation depth rather than claiming a measured frame-rate
+increase. Renderer quality, geometry and shader settings retain their existing
+values. Earlier performance measurements below describe their stated releases.
+
+1.19 / ROUTE PREVIEWS AND EXACT DEPENDENCIES
+
+Preview staging is performed on one background State snapshot. A changed pointer,
+waypoint, mode, support/material choice or forecast supersedes the prior request.
+The drawing thread polls without waiting. Enter queues a fixed draft and only
+its completed, current preview can place it. The city stays paused while drafting.
+
+Ten direct CPU staging samples on the 18,640-person save: median 32.22 ms,
+maximum 47.06 ms. Those structural/clearance calculations are moved off drawing;
+these numbers describe the worker's work, not per-frame UI cost. A committed edit
+still runs the existing complete forecast once. Analysis of 870 exact upstream
+paths takes 6.35 ms median / 8.61 ms maximum across ten samples and is cached.
+
+Utility provenance is aggregated during existing dispatch searches. It adds
+background forecast work. Three standalone forecast samples measured medians
+of 511.05 ms before and 568.53 ms with provenance; the small sample varied
+substantially and does not establish a stable percentage. These are calculation
+times, and frame rate requires separate measurement. No additional route search
+runs per frame. Existing paused-scene caches remain available in trace mode.
+
+All six raw flow scene hashes match 1.18. The original renderer benchmarks and
+previous optimisation measurements follow. They describe those releases.
+
+YORU / TOKYO 1.18.0 — INCREMENTAL FLOW COLOURS
+
+CHANGE
+Routine service changes no longer regenerate the flow meshes. The renderer keeps
+positions, normals, UVs, triangle indices and layer indices, then updates only
+affected spans of the existing colour VBOs. Each changed chunk needs at most one
+subrange upload. Link-type RGB bytes are reused; the existing alpha equations
+retain full input precision and the same rendered bytes. If no bytes change,
+there is no upload. No shader or vertex-format change adds steady draw work.
+
+Layout, curve detail and the existing 0.01 activation threshold still trigger a
+full rebuild. Presentation metadata uses positions rather than pointers into the
+live city. CPU-side colour copies and range metadata remain resident; the colour
+copies occupy about 5.1 MB in this city. There are no new GPU buffers or textures.
+
+CONTROLLED PLAYING CHECK
+The same 1.18 executable compares incremental updates with diagnostic
+YORU_FULL_FLOW_REBUILD=1. Both modes run the normal background simulation from
+identical copies of the 18,640-person city and commit exactly three ticks.
+Two alternating runs per mode give six arriving simulation results each.
+Balanced quality, 1380x790 logical / 2760x1580 physical; fixed camera and input
+locked during benchmarks. All frames retain a 2070x1185 scene target. The first
+four startup frames are excluded. A pre-run process check verifies no other
+Yoru game is open. Medians across the six arriving results:
+
+                                  Full rebuild       Incremental
+Network preparation                   79.68 ms            5.18 ms
+All render-asset preparation           83.25 ms           10.14 ms
+Frame when result arrives            123.26 ms          100.53 ms
+Full mesh rebuilds                         6                    0
+
+Network preparation falls 93.5%. Routine flow uploads are 0.44–0.54 MB
+per result. Rebuilding the same 1,278,680 vertices transfers at least 46.0 MB
+in vertex streams alone, plus indices. This is over 98% less flow-upload data.
+All four runs save byte-identical cities after three ticks.
+
+Overall rendered throughput did not establish an FPS gain in this shared-host
+check: full-mode runs measured 10.4–11.7 FPS and incremental runs 10.7–11.4 FPS.
+Steady drawing and background simulation remain limiting costs; update savings
+do not imply the whole frame becomes fifteen times faster. Topology/activation
+and LOD changes still take the full rebuild path. Earlier timing sets picked up
+desktop scroll input or had a stale game instance open; those exploratory data
+are retained separately and are not the final isolated comparison.
+
+CORRECTNESS
+1,326,301 rendering checks include independent legacy equations for every colour
+role across five carrier pigments, clamping, activation and alpha-byte boundaries.
+The GPU diagnostic compares colour subrange uploads with full rebuilds in six
+complete scenes: baseline, changed service/productivity, two sub-byte variations,
+a power outage and restoration. Actual RGBA scene pixels match in every case;
+restoration also reproduces the initial scene exactly. No authored state changes.
+
+Model, worker, persistence, optics shaders and abstract building forms remain
+byte-identical to 1.17. Native cache, optics, diagram, construction and minimal-UI
+checks remain, including edits/undo/load, filtered layer indices, quality changes,
+repeated view switching and picking. Diagnostic benchmarks now ignore desktop
+input and use non-resizable windows, so accidental scrolling cannot change LOD.
+Normal game input remains enabled.
+
+REPRODUCE AND EVIDENCE
+Use an independent copied city directory for each mode, since playing checks
+intentionally advance the copied city by three ticks:
+  YORU_DATA_DIR=/path/to/copy YoruTokyo --fit --size 1380x790 --play-benchmark out.json
+  YORU_FULL_FLOW_REBUILD=1 YORU_DATA_DIR=/path/to/another-copy YoruTokyo --fit --size 1380x790 --play-benchmark full.json
+Exact-pixel check: --flow-update-check, with and without YORU_FULL_FLOW_REBUILD.
+Raw evidence: build/flow18-solo-aggregate.json, flow18-solo-summary.json,
+flow18-pixel-equivalence.json, flow18-model-preservation.json and native logs.
+Original saves are hash-checked independently. Old diagnostic snapshots were
+losslessly compressed to recover space; original hashes and .gz locations are
+recorded in build/flow18-diagnostic-compression.json. Expanded old app backups
+were removed only after all file bytes matched their retained release ZIPs.
+
+PREVIOUS FRAME-PACING AND CALCULATION WORK
+
+YORU / TOKYO 1.17.0 — SMOOTHER CITY MACHINE
+
+AUTOMATIC TICKS / FRAME STALLS
+Automatic City::step no longer executes on the display thread. A single worker
+owns an independent State copy and calls the unchanged simulation. The display
+thread accepts one whole result only when its schema-6 input and save identity
+still match. Paused/modal/painting frames reject a ready result. The worker has
+no file path and cannot save. No partially updated forecast enters the renderer.
+
+Only State is copied at submission; route diagnostics rebuild on the worker.
+Authored inputs compare directly instead of allocating JSON on the display
+thread. Dense-city test: longest submission 3.10 ms. Complete serial forecasts
+match through three ticks, including paths, loads, services and safety metrics.
+Save-field mutation, stale edit/undo, pause, different-save and shutdown checks
+pass. Model and persistence source files remain byte-identical to 1.16.
+
+FINAL RUNNING-CITY CHECK / 18,640-PERSON SAVE
+Both runs use the final renderer at Balanced, 1380x790 logical / 2760x1580 physical,
+and commit exactly three ticks from identical isolated saves. Diagnostic
+YORU_SYNCHRONOUS_TICKS runs the prior display-thread scheduling for comparison.
+All frames after the first four are included, including tick frames:
+
+                            Synchronous         Worker
+Effective rendered FPS            3.79          16.61
+95th-percentile frame       1798.90 ms       81.50 ms
+99th-percentile frame       1855.89 ms       97.42 ms
+Worst frame                 1867.03 ms      121.35 ms
+
+This is 4.4x effective rendering throughput and a 93.5% reduction in worst-frame
+time in this run. Both saved cities are byte-identical after the three ticks.
+A preceding two-run-per-mode check gave 4.03 to 13.55 effective FPS and worst
+frames of 1930.36 to 147.20 ms. These are actual draw-loop frame measurements,
+not calculation-only CPU percentages. Raw final data: build/fps-ship-playing-*.
+
+RENDERING WORK
+Stopped machine geometry stays in its scene target. Stopped diagram geometry
+uses a native-size image while hit bounds follow the live floor. Camera changes
+and advancing animation bypass image caching; selected animated journeys and
+construction previews remain live. Rain draws after presentation, independently
+of the cached city. Optical feedback and native-resolution filaments stay live.
+
+One shader/texture/projection binding serves the whole 2D network pass; chunk
+positions remain camera-relative for distant-world precision. Three small flow
+lookup textures avoid overwriting an image still read by the previous frame.
+A smaller interpolated component field replaces per-feedback-pixel source loops
+during camera movement. Fully overwritten optical targets no longer need clears.
+The default city resolution remains 75% (Balanced), with native UI and optics.
+The original display multisampling is retained after comparison measurements.
+
+FINAL RENDER-ONLY COMPARISON / 1.16 TO 1.17
+Same saved city, window and physical framebuffer. Both executables run unbundled
+from the same directory, with the same Release optimization and no FPS cap.
+Two alternating reference/optimized runs per clock mode give forty measured
+frames per view and version. Four warm-up frames per phase are excluded. The
+1.16 reference has only the same benchmark clock selector added. Every authored
+snapshot is unchanged. Medians, reciprocal FPS:
+
+STOPPED ANIMATION CLOCK / render only
+View                     1.16 ms    1.17 ms    1.16 FPS    1.17 FPS
+Overview                    48.03      23.18        20.8        43.1
+Upper city                  46.52      25.33        21.5        39.5
+Camera pan                  59.14      56.74        16.9        17.6
+L6 diagram                  38.52       8.79        26.0       113.8
+Raw scene diagnostic        33.78      12.87        29.6        77.7
+
+CONTINUOUS ANIMATION CLOCK / render only
+View                     1.16 ms    1.17 ms    1.16 FPS    1.17 FPS
+Overview                    52.01      49.43        19.2        20.2
+Upper city                  48.83      46.50        20.5        21.5
+Camera pan                  62.56      63.69        16.0        15.7
+L6 diagram                  47.39      52.25        21.1        19.1
+Raw scene diagnostic        45.53      46.47        22.0        21.5
+
+Stopped overview takes about half the frame time; the stopped diagram takes
+about one quarter. The camera pan always draws live. Continuously animated
+render-only throughput is broadly similar, with some regressions in this shared
+host measurement. The major running-city improvement comes from removing the
+long synchronous tick stalls, rather than claiming every shader/view is faster.
+
+LIMITS AND REPRODUCTION
+Normal focused play remains capped at 60 FPS; uncapped benchmark results above
+60 are not a promised normal-play frame rate. Host load causes substantial run
+variation. Full simulation calculation is still CPU-bound; edits and manual
+single-step still calculate synchronously. Slow machines can advance city ticks
+more slowly while the interface keeps drawing. The simulation sequence, route
+rules and committed results are retained.
+
+Use an independent copied save directory for every check:
+  YORU_DATA_DIR=/path/to/copy YoruTokyo --fit --size 1380x790 --play-benchmark out.json
+  YORU_SYNCHRONOUS_TICKS=1 YORU_DATA_DIR=/path/to/another-copy YoruTokyo --fit --size 1380x790 --play-benchmark baseline.json
+For rendering alone use --render-benchmark out.json; set YORU_BENCHMARK_STILL=1
+to hold its animation clock. YORU_GPU_PROFILE=1 serializes GPU passes solely for
+diagnostics; never use those synchronized frame times as shipping throughput.
+
+Evidence: build/fps-ship-comparison.json, fps-ship-runs.json,
+fps-ship-playing-summary.json, fps-worker-input-tests-dense.log,
+fps-native-*.log, fps-ship-cache.log and fps-model-preservation.json.
+Historical source ZIP backups were packed losslessly into shared raw ZIP-record
+parts to recover disk space. Each original SHA-256 is verified. Restore using
+build/restore-source-backup.py and the corresponding .zip.lossless.json manifest.
+
+PREVIOUS CALCULATION AND RENDERING WORK
+
+YORU / TOKYO 1.16.0 — PACKED ROUTE PRIORITIES
+
+PROFILE AND CHANGE
+A native sample of an isolated 1.15 simulation identified route-search heap work
+as a significant cost. RouteFrontier.h packs nonnegative (cost,node) pairs into
+64-bit priorities. Scalar heap comparisons preserve exactly the pair ordering,
+including equal-cost node ties. The same queue storage now serves ordinary route
+searches and full-network distance searches within each forecast. Searches stop
+when the cheapest queued cost exceeds their existing trip budget.
+
+No provider order, path cost, capacity, distance, ceiling, step-free constraint,
+reserve, demand-sharing or tie-break changes. There is no new persistent state.
+The packed binary heap gave the strongest results in the queue comparison;
+the alternative prototype and all raw comparison data are retained under build/.
+
+CALCULATION-ONLY CPU / 1.15 TO 1.16
+The new simulation_benchmark loads the file once, warms the simulation, then
+measures immutable City::evaluate calls. It records process CPU and wall time for
+each call. File loading, rendering and JSON export are outside measured samples.
+Two alternating reference/optimized runs per city use five samples each, giving
+ten samples per version and case. Medians:
+
+City              1.15 CPU      1.16 CPU    Reduction
+dense          471.41 ms    360.06 ms   23.6%
+existing       462.67 ms    352.58 ms   23.8%
+outage         763.51 ms    602.93 ms   21.0%
+
+These are calculation-only CPU figures, distinct from earlier whole-command
+measurements that included city loading. They are not a fixed FPS or tick-latency
+guarantee on a shared host. Raw final data: build/frontier-simulation-timings.json.
+Earlier queue variants: build/frontier-core-comparison.json. The original CPU
+sample is build/routing-profile.txt; the profile helper used a frozen city.
+
+Reproduce against a copied city:
+  simulation_benchmark /path/to/copied/city-v6.json 5
+The reference benchmark compiles the preserved 1.15 Simulation.cpp at the same
+Release optimization level and links the unchanged model units. Both benchmarks
+check authored-state equality; output metrics match exactly in every measured case.
+
+CORRECTNESS
+808,931 queue checks compare packed priorities with pair-priority queues across
+random insert/pop sequences, equal costs, duplicates, decreasing pending keys,
+partial resets, zero and maximum integer values, and invalid-input guards.
+Final full forecasts match byte for byte with 1.15 in four city cases through
+two steps each: dense, existing save, total exchange outage and a remote city
+shifted by -900,000 on both horizontal axes. Full paths, edges/load/loss, services,
+water head, exit counts, blackout access and authored state are included.
+Proof: build/frontier-forecast-equality.json. Rendering sources are unchanged.
+
+PREVIOUS CONNECTIVITY WORK AND MEASUREMENTS
+
+YORU / TOKYO 1.15.0 — FASTER CONNECTIVITY ANALYSIS
+
+REPEATED COMPUTATION REMOVED
+Ground-exit searches formerly rebuilt the same destination set for every home
+and inserted residual-flow values into a tree as edges were visited. One compact
+sink mask now serves all homes in the forecast. Parent, link, queue and signed
+edge-flow arrays reuse storage. FIFO order, two augmentations and cancellation
+of an earlier residual path remain. No destinations yields the same zero result
+without searching the whole graph.
+
+Building docks use a hash lookup with four inline node slots, avoiding ordered
+cache searches and tiny node-vector allocations. The cache is never iterated to
+choose routes. Ordered graph-node IDs, source/provider order and heap tie-breaks
+are unchanged. Each forecast builds fresh caches, so no cross-edit invalidation
+or stale topology is introduced. Rendering sources and all game rules are retained.
+
+CPU MEASUREMENTS / 1.14 TO 1.15
+Two alternating reference/optimized child-process runs per case. These medians
+include loading the city, evaluating its forecast and exporting summary metrics:
+
+City            1.14 CPU     1.15 CPU     Reduction
+dense        1.173 s    1.077 s    8.2%
+existing     1.140 s    1.018 s    10.7%
+outage       0.954 s    0.773 s    18.9%
+
+The first exit-only pass saved about 4% on normal cities; the final connection
+cache changes bring the measured reduction to 8–11%. The outage case saves about
+19%. CPU process time excludes time spent waiting for other host processes. This
+does not establish a fixed FPS or simulation-tick latency. Raw CPU/wall data:
+build/exit-routing-{first-pass,timings}.json. The shared flow renderer from 1.14 is
+unchanged; its historical rendering measurements remain below.
+
+EQUIVALENCE
+Reference and optimized forecasts match byte for byte through two steps in each
+checked city. Records include state, service levels, shipments/journeys and paths,
+all edges/load/loss, coverage, water head, per-home independent exit counts,
+blackout access and aggregate safety totals. Normal, existing-save and total
+exchange-outage cases are retained as compressed reference data, with equality
+hashes in build/exit-forecast-equality.json. Remote-world results are recorded
+separately in build/exit-remote-equality.json.
+
+PREVIOUS SHARED FLOW WORK AND MEASUREMENTS
+
+YORU / TOKYO 1.14.0 — SHARED FLOW GEOMETRY
+
+WORK REDUCTION
+Each animated strand corner previously recalculated its two bends, segment
+endpoints and normalized edge direction. The vertex shader now fetches these
+from a full-precision table shared by link length, seventeen phase classes, four
+strands and segment index. Its algebra preserves the original per-segment edges;
+no strands, segments, particles or contacts are removed. The table contains 816
+samples in the dense overview and 1,360 at the crown/pan settings, with one upload
+per changed process time. Identical paused time performs no calculation or upload.
+The table is bounded by the same finite strand/phase/LOD vocabulary. This fixture
+uses two length variants and at most 21,760 bytes of float shape data.
+
+Power, water and rail views have separate index lists over the same vertex VBOs.
+Only the chosen list is submitted. The lists partition the original index list
+and retain each layer's ordering. The main view uses the untouched combined index
+order. The vertex shader no longer decodes visibility to discard hidden geometry;
+CPU chunk/floor culling and filtered index lists remove it before processing.
+Additional layer index buffers contain one extra copy of the original index
+entries in total; they do not duplicate position, colour, normal or UV data.
+
+REPEATED NATIVE MEASUREMENTS
+Same paused 648-building / 15,229-person fixture and 2760 x 1580 backbuffer.
+Four warm frames and twenty samples per phase. Median frame time in ms:
+
+Scenario                         1.13     1.14
+Full skyline + optics             51.71    52.57
+Crown neighbourhood               57.68    49.38
+Camera pan across L6              88.54    82.22
+L6 diagram                        61.17    63.08
+Full skyline, scene only          64.62    59.95
+
+The repeated pass improved crown, pan and scene-only times; overview was similar.
+Host variation is substantial: an earlier pass also slowed the unchanged diagram
+from 34.92 to 63.95 ms. These runs do not establish a stable FPS guarantee.
+Both earlier and repeated raw measurements are retained as build/flow-{reference,
+optimized}{,-repeat}.json. The rendering result is less repeated flow-shape work and hidden-layer vertex
+processing. The route-search optimization below also reduces simulation work.
+
+ROUTE SEARCH WORKSPACE
+Each forecast graph now keeps its source, distance, parent, link and heap storage
+across dispatch searches. Epoch markers initialize only touched nodes; four
+whole-graph buffer allocations/clears and repeated heap allocations no longer run
+for every request. Every traversal still reads current residual capacity and
+accessibility/head constraints. Provider order and the original (cost,node) heap
+ordering are retained. A graph is recreated for each forecast, so edits, undo and
+loads cannot reuse stale connectivity. People/freight overlays now read each
+stored path with its building contacts directly, removing a temporary vector
+allocation and copy for every displayed route every frame. Segments, duplicates,
+ordering and particle timing retain their prior meaning.
+
+The original and optimized simulations produced byte-identical full fingerprints
+on both the dense fixture and a frozen copy of the existing city: three snapshots
+per city, through two simulation steps. Fingerprints include authored state,
+building services, every edge/load/loss, every shipment/path, every journey/path,
+connector utilization, water head and service coverage. Equality hashes are in
+build/flow-forecast-equality.json. Source files and raw forecasts are retained.
+
+ROUTE FORECAST MEASUREMENTS
+Two alternating reference/optimized runs per city, recording child-process CPU
+time for loading and evaluating each frozen city. Medians:
+dense        1.445 s -> 1.322 s (8.5% less CPU)
+existing     1.377 s -> 1.258 s (8.6% less CPU)
+
+These include JSON loading and metric export, not just the route-search function.
+They do not establish a frame-rate guarantee. Raw CPU/wall measurements and exact
+metric equality checks: build/flow-routing-timings.json.
+
+VISUAL AND STATE CHECKS
+At matching Native size, the diagram capture is pixel-identical. Machine captures
+have mean differences of 0.022–0.077 RGB levels out of 255; RMS is 0.659–0.934,
+including live rain. The original four strands and order are retained. Analytical
+corner comparisons cover all LODs, phase classes, both axes, short building taps,
+strand sides and remote chunk-local offsets. Benchmark city snapshots and fixture
+bytes are unchanged. Details: build/flow-comparison.json and VALIDATION.txt.
+
+PREVIOUS ABSTRACT FORMS AND FRAME-RATE MEASUREMENTS
+
+1.13 NOTE / ABSTRACT FORMS
+Building skins now contain simple flat masses without windows, roof machinery,
+ornamental bands or repeated rings. Each operating building has one pulsing cap
+point instead of the previous multiple moving accents and smoke. The point is
+submitted separately from its static prototype. Building prototypes no longer
+include an address variant, and ready sprites no longer repaint periodically.
+Activity, upgrades, enabled/support state and service warnings still select the
+correct prototype. The atlas remains bounded; no simulation work is changed.
+
+The 1.13 paused dense-city benchmark at 2760 x 1580 Native resolution completed
+with unchanged authored state and byte-identical fixture files. Its measured
+fixed-view phases had zero sprite updates and zero sprite misses; camera motion
+introduced seven new prototypes in measured frames and still had zero misses.
+These are work-count observations, not a stable FPS claim. The historical timing
+comparisons below belong to 1.11. Raw 1.13 data: build/abstract-forms.json.
+
+1.12 NOTE
+The minimal UI retains the 1.11 renderer and quality modes. Ten default buttons
+replace thirty-five, and the city fit uses the freed canvas. The measurements
+below belong to the previous 1.11 layout; they are not new 1.12 frame-rate claims.
+
+YORU / TOKYO 1.11.0 — FRAME-RATE WORK AND RENDER QUALITY
+
+Same dense-city fixture, 648 buildings and 15,229 residents, inhabited L0–L12.
+The native backbuffer is 2760 x 1580 in every run. The city is paused; simulation
+and screenshot export are outside the measured render interval. Five phases each
+have four warm frames and twenty measured frames. Times are medians in ms.
+
+Scenario                    1.10 native  1.11 native   Balanced     Fast
+Full skyline + optics          56.77    52.97    58.06    44.62
+Crown neighbourhood            73.64    50.48    63.93    37.21
+Camera pan across L6           68.24    79.93   119.33    62.38
+L6 diagram                     41.58    49.04    44.30    50.70
+Full skyline, scene only       58.96    45.59    67.11    46.57
+
+Native is a like-resolution comparison. Balanced and Fast deliberately reduce
+city-image resolution, not UI or diagram resolution. Balanced (default) uses
+2070 x 1185 scene pixels: 43.75% fewer than Native. Fast uses 1380 x 790: 75%
+fewer pixels. F4 changes the setting for this session; F3 displays it with FPS.
+The diagram always draws directly at native resolution. No city objects, levels,
+network strands or optical effects are removed by these modes.
+
+HOST VARIATION AND LIMITS
+These short runs vary substantially with concurrent system work and GPU/window
+presentation. The unchanged diagram alone varied from 30 to 59 ms across the
+controlled comparison sessions. Do not interpret one row as a stable frame-rate
+guarantee or infer that fewer scene pixels always win during a load spike.
+Native improved in the skyline, crown and scene-only phases of the last run;
+panning did not show a reliable gain. Advancing simulation tick cost is unchanged.
+All captured raw timings are retained, including slower runs.
+
+DETERMINISTIC WORK REDUCTIONS
+The full skyline submits 1,278,472 network vertices instead of 1,917,708: exactly
+one third fewer. The indexed triangles preserve the original quads and draw order.
+A fifteen-entry curve-basis uniform and seventeen sine/cosine phase pairs replace
+millions of repeated per-vertex trigonometric evaluations. Mesh vertex bytes also
+fall by one third; no additional per-vertex coefficient attributes are retained.
+
+Stationary ground and structure surfaces are reused, with selective invalidation
+for material/support/junction/view changes. The optical neighbourhood is cached
+in full-precision float colour targets. Live feedback, time, traffic, cabins,
+walking signals and building motion continue independently. During camera motion,
+direct scene drawing and the original direct field shader avoid cache rebuild
+passes. Warm fixed-view samples contain no surface or field rebuilds; panning
+samples use the direct path. All 2D targets omit unused depth attachments.
+Unfocused interactive windows cap at 15 FPS; focused windows retain the 60 FPS
+cap. The explicit benchmark runs uncapped regardless of focus.
+
+VISUAL AND SAVE CHECKS
+At matching Native resolution, the checked L6 diagram city area is pixel-identical
+to 1.10. The crown city area differs by mean 0.078 and RMS 0.887 RGB levels out of
+255; scene-only mean 0.029 and RMS 0.691. These small differences include live rain
+and extra 8-bit composition rounding. All benchmark fixture files remain exactly
+byte-identical. City/model/save sources are unchanged from 1.10.
+
+Raw final captures: build/framerate-release-{reference,native,balanced,fast}.json
+and corresponding logs. Earlier alternating-order runs are also retained as
+build/framerate-final-*.json and build/framerate-{reference,optimized}-*.json.
+Visual comparison: build/framerate-visual-comparison.json. Native and Balanced
+phase screenshots are in build/framerate-release-{native,balanced}-*.png.
+
+Reproduce with a copied city-v6.json in an isolated directory:
+  YORU_DATA_DIR=/path/to/copy YoruTokyo --fit --size 1380x790 \
+      --render-quality native --render-benchmark result.json
+Use balanced or fast to measure the lighter modes. The JSON separates native
+framebuffer size from actual scene size. Optional --screenshot preview.png saves
+all five views. The benchmark verifies authored-state equality before and after.

@@ -1,0 +1,252 @@
+Version 1.26 adds the original BuildCatalog and EasyBuildUI modules and
+EasyBuildTests.cpp. It unifies construction search, adds type sampling and
+whole-stroke building placement, and shares the model's placement validation
+with the preview. Construction batches forecasts until release. Existing
+simulation, route planning, save format, renderer and optical shaders are
+retained. No dependency is added.
+
+Version 1.25 adds original ExpandedDemo.cpp / ExpandedDemo.h and
+ExpandedDemoTests.cpp. It composes four copies of the existing authored city,
+adds supported cross-quarter skyways, rail spines and local utility feeds, and
+selects a separate expanded save profile. Original city, model, persistence,
+rendering and optical-navigation sources are retained. No dependency is added.
+
+Version 1.24 adds original OpticsView.h, OpticsSources.h and
+OpticsNavigationCheck.cpp, with world-space feedback reprojection in the existing
+optical shader and stable city-authored source selection. It removes the camera
+history reset and adds targeted CPU/GPU navigation regression checks. No external
+dependency, simulation rule or persistence format changes.
+
+Version 1.23 adds original retained transfer meshes, camera-relative reuse,
+forecast-based presentation memoization and shared network-corner lookup tables
+in the existing renderer. The original curve formula and subpixel error bound
+remain, with additional 4/8-segment buckets. Visible unfocused windows use the
+normal frame target. --paced-benchmark records the normal presentation path.
+No dependency, simulation, persistence format or optical shader is changed.
+
+Version 1.22 adds an opt-in local raylib/rlgl.h batch streaming patch, enabled
+by the project’s YORU_STREAM_BATCH definition. Transient batch VBO storage is
+replaced with GL_STREAM_DRAW uploads, and attributes unused by the active shader
+are left untouched. Retained meshes and index buffers retain their original path.
+YORU_BATCH_LEGACY=1 selects the previous upload path for diagnostics. The original
+batch-buffer count is retained. Existing raylib licensing and the earlier font
+collection compatibility patch are preserved. No external dependency was added.
+
+Version 1.21 adds original src/Transport.cpp, src/TransportUI.cpp,
+src/TransportCheck.cpp and tests/TransportTests.cpp. It layers lift service plans,
+shared car time, selected stopping floors, aggregate queues and daily demand over
+the existing physical connectors and finite dispatch. No external dependency or
+runtime service is added. Passenger simulations remain aggregate, not per-agent.
+
+Version 1.20 adds original district-volume, operating-policy and exchange code:
+src/Districts.*, src/DistrictTrace.*, src/DistrictUI.cpp and src/DistrictCheck.cpp,
+with tests/DistrictTests.cpp. Districts reuse the native sparse city, graph
+capacity, warehouse inventories, completed dispatch provenance, background
+snapshot pattern, two projections and resilience inspection. No new external
+dependency, runtime asset, service or upstream project copy was introduced.
+
+Yoru Tokyo 1.2 — two views of the city as machine
+Basis: ../AftertasteCpp, version 3.28.0, inspected 31 October 2026.
+
+Version 1.2 adds an orthographic Aftertaste-style process floor alongside the
+Afterimage view. Schematic.cpp adapts Aftertaste's white grid, primary colours,
+equipment silhouettes, live labels and visible service contacts to city components.
+CityProjection.h supplies a shared drawing/input chart for both projections.
+The diagram is an alternative view of the same city, not a separate simulation.
+
+Visual basis for 1.1: ../Afterimage/src/shaders.hpp and renderer.cpp, inspected
+31 October 2026, plus the actual drift and tunnel previews. CityMachine.* and
+MachineShaders.h adapt its bounded regional flow, pigment filaments, chroma
+rotation, full-precision phase targets, separable bloom kernel, recursive light history and hue-preserving
+exposure to the city's actual components. The effect's source field is authored
+by enabled, serviced city buildings and by the rendered physical networks.
+Afterimage's shooter, music engine and tunnel gameplay are not included.
+The main scene fills the window; the workbench opens with Tab. Crisp component
+geometry is rendered at native display resolution, with separate smaller optical
+return buffers. UI is composited afterward and never enters the feedback.
+Neither original project is modified or referenced at runtime.
+
+Reused/adapted patterns:
+src/Factory.h: sparse Position coordinates, ordering and independent route layers.
+src/Interface.cpp: native font discovery, text sizing/wrapping and hit targets.
+src/FactoryInterface.cpp: pointer-anchored grid navigation, construction strokes,
+undo before simulation ticks, library + floor + inspector workspace.
+src/Main.cpp: native app lifecycle, isolated storage, screenshots and smoke mode.
+CMakeLists.txt/build.sh: standalone raylib macOS app bundle and test separation.
+
+Dependencies copied, with their existing licenses:
+vendor/raylib (5.5), vendor/json.hpp and vendor/json-LICENSE.txt (3.11.3).
+Local raylib compatibility fix: rtext.c accepts .ttc in LoadFontFromMemory and
+obtains the first face offset through stbtt_GetFontOffsetForIndex, allowing
+macOS system font collections to load correctly.
+
+Yoru has its own executable name, bundle identifier, source directory, app bundle,
+save schema and data folder. No symlink, runtime reference, shared state, culinary
+save import or write into AftertasteCpp is used.
+
+1.3 / MACHINE ECOLOGY
+Production.cpp, Simulation.cpp and Kernel.cpp introduce Yoru's own local inventory,
+recipe conversion, capacity-constrained route dispatch, material ledger, storage,
+workforce, education, maintenance, district regimes and diagnostics. These systems
+do not copy simulation code from either original project. Save schema 2 preserves
+version-one city.json while importing it to city-v2.json.
+
+1.4 / VERTICAL CITY
+The three-coordinate sparse world, structural reach, explicit spatial transfers,
+costed commuter routing, 3D plans, floor-plane projection, slabs and cutaways are
+Yoru-specific code. Spatial.cpp, SpatialUI.cpp and SpatialUnits.h extend the native
+sandbox; no external 3D assets or browser runtime are required. Research references
+are recorded in VERTICALITY-RESEARCH.txt and are design influences, not copied
+architectural models or real engineering specifications.
+
+1.5 / THE INHABITED MACHINE
+Infrastructure.cpp introduces routed programme loads, structural condition and
+cumulative foundations. Simulation.cpp adds distinct mobility profiles, finite
+care/leisure journeys, persistent health, real-water pressure booster cascades,
+transfer wear, queue memory and a shared workshop budget. EcologyUI.cpp exposes
+these in the same native views. Capacities, weights, health changes and pressure
+head are fictional game rules. No external geometry or assets were added.
+Schema four imports prior authored cities while preserving their source files.
+
+1.6 / THE RESILIENT MACHINE
+Yoru-specific network analysis now finds independent ground routes and passive
+blackout access. Read-only outage probes rebuild a copied city after a transfer
+or core-segment failure. Bearing-flow arrows expose actual propagated loads.
+Pipe condition, valves, exact edge losses, protected reserves, elevated gravity
+tanks and persistent household backlogs/fatigue extend the same quantity model.
+ResilienceUI.cpp presents these in the existing native machine and floor views.
+Schema five retains older city files. No external assets or runtime were added.
+
+1.7 / STRUCTURE AND CIRCULATION
+Deck forms, transfer-podium bearing, offset individual piers, rectangular platform
+construction and new circulation geometry extend Yoru's sparse spatial model.
+Construction.cpp supplies empty physical frames; ConstructionUI.cpp presents the
+material, circulation and template palette. Bridge braces, catwalk grating, deep
+podium edges and moving belts are drawn directly in both native projections.
+New connection kinds retain physical capacities, power, wear, accessibility,
+resilience and persistence. Schema six preserves older deck/connection identities.
+
+1.8 / THE TWELVE-LEVEL CITY
+Demo.cpp authors a separate editable, inhabited Tokyo using the established
+sparse tiles, four deck forms and stable transfer types. DemoUI exercises the
+actual New city action, skyline, floor plans and cutaway. No save-schema change
+or outside asset added. The original compact starter remains available.
+
+1.9 / THE COMPACT VERTICAL CITY
+Demo.cpp fills the intermediate floors, compacts the tower grid and places food,
+work, care, recovery and generation closer to homes. Existing deck/column rules
+carry the added floor mass. Public transport capacity remains explicit.
+Simulation.cpp caches graph-local entrances and filters disconnected providers
+while preserving residual routing, ceilings, access rules and provider order.
+EfficiencyMetrics.cpp records comparable density, commute and utility measures
+and exact forecast fingerprints. The dense preset uses an independent save path.
+
+1.10 / CACHED NATIVE RENDERING
+RenderResources.* owns a bounded shared sprite atlas, chunked GPU network meshes
+and analytic terrain shader. RenderAssets.cpp separates static artwork from live
+component, traffic and smoke motion. RenderBenchmark.cpp and RenderChecks.cpp
+exercise the same renderer with isolated diagnostic cities. All new geometry and
+shaders are project-native code based on Yoru's existing visual primitives; no
+external assets, services or runtime dependencies are added. Afterimage optics
+and the shared Aftertaste-style diagram remain in place. Simulation sources,
+construction rules, persistence schema and the 1.9 dense preset are unchanged.
+
+1.11 / FRAME-RATE CONTROLS AND CACHED SCENES
+Native C++ and GLSL changes factor the existing network curves into a fixed
+basis and seventeen live phases, use indexed quads, cache static scene surfaces
+and the optical neighbourhood, and retain direct paths during camera motion.
+The field and direct shaders retain the existing Afterimage equations. All 2D
+render targets now omit depth attachments. Native/Balanced/Fast scene resolution
+is separate from native-resolution UI and diagram drawing. No model, content,
+external asset, save schema, or runtime dependency is added or changed.
+
+1.12 / THE CITY FIRST
+MinimalUI.cpp reorganizes the existing native controls into one compact bar,
+contextual city/layer/level/menu panels, independent build/inspection drawers and
+an optional chrome-free view. Existing building, engineering and kernel controls
+are reused. Hit labels support actual-control reachability tests. Selection
+framing and viewport margins adapt to the open panel; no simulation, construction,
+content, persistence, resource economy or rendering-quality rule is changed.
+
+1.13 / ABSTRACT FORMS
+BuildingForms.h and CityRendering.cpp replace literal building ornament with
+seven procedural geometric families. RenderAssets.cpp supplies one live operating
+point separately from static forms. Address-independent prototypes reuse the
+existing atlas without periodic repainting. No external mesh, texture, image or
+asset was introduced. This changes presentation only: building envelopes, model
+sources, save schema, spatial rules and the technical diagram remain unchanged.
+
+1.14 / SHARED FLOW GEOMETRY
+RenderResources.cpp factors the existing animated strand equations into a shared
+full-precision shape texture. A length/phase/strand/segment table replaces the
+repeated per-vertex bend and normalized-edge calculations. Layer-specific index
+buffers share the original vertex data and retain index order. Simulation.cpp also reuses per-graph route-search buffers with epoch markers;
+it retains residual-capacity checks and the original heap/provider tie-breaks.
+Kernel.cpp reads shipment/journey paths through a view that includes their building
+contacts, removing temporary route copies while keeping the same drawn segments.
+No replacement asset, external package or simulation/route rule is introduced.
+
+1.15 / FASTER CITY CONNECTIVITY
+Simulation.cpp prepares a ground-destination mask once per forecast, reuses flat
+buffers for two-augmentation exit searches, and caches building docks in a hash
+lookup with four inline node slots. Ordered graph IDs, provider/heap traversal,
+residual cancellation and all routing rules remain. The caches are local to each
+forecast and introduce no new persistent state, assets or external dependencies.
+
+1.16 / LIGHTER ROUTE SEARCHES
+RouteFrontier.h packs nonnegative cost/node pairs into 64-bit keys for scalar heap
+comparisons. Simulation.cpp shares this queue across route and distance searches
+and stops scanning when the cheapest queued cost exceeds the existing budget.
+The queue retains the previous lexicographic tie-break. RouteFrontierTests.cpp
+compares it with pair-priority queues across random and boundary operations.
+SimulationBenchmark.cpp separates calculation CPU/wall time from load/export.
+No external algorithm source, assets, dependency or persistent game state is added.
+
+1.17 / SMOOTHER CITY MACHINE
+SimulationWorker.cpp/h runs the existing City::step on an isolated State copy.
+A schema-6 input comparison guards publication, with save-field mutation tests
+and complete serial-forecast comparisons. The display thread alone owns the live
+city. No model, route, production, persistence or save-format source changes.
+Paused machine/diagram images cache presentation data only. Diagram hit bounds
+are reconstructed from the live floor. Rain draws live after optical presentation.
+The 2D network pass follows the existing rlgl matrix and vertex layouts used by
+vendored raylib DrawMesh while keeping shared bindings active across chunks.
+Three bounded lookup textures avoid updating an image still in flight. The
+smooth component field uses a smaller interpolated target during camera motion;
+feedback history and final optical filaments retain their existing precision.
+GPU completion profiling is opt-in diagnostic code, disabled in normal play.
+No replacement assets, downloaded packages or new persistent state are introduced.
+
+1.18 / INCREMENTAL FLOW COLOURS
+The existing renderer's nine flow colour roles are separated from its static
+mesh geometry. Chunk-local CPU colour arrays and compact vertex ranges allow
+rlUpdateVertexBuffer to refresh only changed byte spans. Ordered link/source
+positions carry presentation metadata across forecasts without keeping pointers
+to model objects. Layout, LOD and activation changes retain full rebuilding.
+The exact existing raylib Fade/HSV equations are preserved and tested against
+legacy colour bytes. GPU shaders, vertex formats and layer index streams remain.
+No simulation, route, production, persistence or worker source changes. There
+are no additional shader fetches, visual simplifications or replacement assets.
+
+1.18.1 / RESUME THE LARGE CITY
+Normal app and diagram launches now resume megacity-dense/city-v6.json and fit
+its skyline. The previous default opened the separate compact starter instead.
+LaunchProfile.h centralises the choice; --starter retains access to that save.
+Fresh/blank and isolated diagnostic fixtures retain their previous profile rules.
+No model, renderer, worker, persistence, preset or save-format source changes.
+
+1.19 / ROUTES THROUGH THE MACHINE
+RoutePlanner.cpp/h stages continuous multi-leg projects using existing route,
+deck, core and connector rules. Connect can defer its forecast inside staging;
+only a complete validated project enters the live City and one undo snapshot.
+RouteUI.cpp adds the R composer and previews without altering saved drafts.
+Simulation.cpp aggregates utility delivery provenance on its existing searches
+and records chosen edge IDs for utilities, freight and journeys. MachineTrace.cpp/h
+reads these completed forecasts; TraceUI.cpp draws native overlays and inspection.
+A unique derived forecast revision invalidates caches across worker publication.
+No external source, asset, dependency or new persistence format is introduced.
+
+Route preview staging runs as one bounded asynchronous State-snapshot job.
+Superseded requests cannot publish geometry or commit a draft. Commit accepts
+only the checked live forecast revision; cancellation clears queued placement.
+The exact structural check stays off the drawing thread while the pointer moves.

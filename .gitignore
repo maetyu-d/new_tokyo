@@ -1,0 +1,15 @@
+build*/
+*.app/
+*.zip
+.DS_Store
+
+# Generated preview captures in the project root.
+/*.png
+
+# Local editor files and city saves.
+.idea/
+.vscode/
+*.swp
+city*.json
+checkpoint*.json
+*.json.bak

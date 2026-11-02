@@ -1,0 +1,1395 @@
+YORU / TOKYO 1.26.0 — EASIER CONSTRUCTION VALIDATION
+
+PASS MODEL AND PLACEMENT
+All seventeen CTest suites pass, including the four-quarter demo, simulation,
+construction, route planning, shared projection and rendering resources. The
+127 focused easy-build checks cover complete catalogues and search aliases,
+shared placement rejection reasons and non-mutation, costs and commissioning
+stock, deferred forecasts, whole-stroke undo and an assisted supported lift.
+
+PASS ACTUAL NATIVE UI
+The new native check selects rendered build cards, paints four buildings,
+verifies their drawn hit regions, performs the rendered Undo, copies a real
+upper-floor type, checks blocked-placement feedback, selects assisted lifts,
+roads, platforms and plans, and repeats painting and undo in the floor plan.
+It also verifies automatic pause, zoom and cutaway restoration, clipped results
+at minimum window size, and the eleven-target default HUD.
+
+The existing minimal UI, construction palette, continuous route/trace and
+render-cache checks pass. GPU optical-navigation checks still retain light
+through pan, zoom in/out and resize, without exposed-edge smearing or ghosts.
+Five native captures were visually reviewed for the new catalogue and brush.
+
+PASS PRESERVATION
+All eleven actual user save files remain byte-for-byte identical. Native tests
+use isolated test cities. The 154 x 70 expanded demo and separate original and
+starter profiles remain. No persistence format, simulation algorithm, optical
+shader or rendering-quality setting changes.
+
+Earlier validation notes follow.
+
+YORU / TOKYO 1.25.0 — EXPANDED DEMO VALIDATION
+
+PASS EXACT DOUBLED AXES AND REAL DENSITY
+77 x 35 becomes 154 x 70: four times the area, four complete inhabited quarters,
+2,592 buildings, 60,916 initial residents and an unchanged L0–L12 skyline. Ground
+street and rail floods reach all four quarters. Eighteen new skyway spans have
+actual bearing piers and legal, clear geometry. All 14,931 cells and 1,546
+transfers round-trip through the ordinary save reader.
+
+PASS RUNNING CITY AND USER FLOW
+Three subsequent simulation ticks retain full food, water and power coverage,
+with no unsupported or overloaded structures. Forty-four launch-profile checks
+cover default, original, expanded, starter, isolated, fresh and diagnostic paths.
+The native New City action generates the larger demo, and its overview, elevated
+floor plans, arterial, rail, cutaway and full-city camera checks pass. The GPU
+optical-navigation regression still passes.
+
+PASS PRESERVATION
+All eight previous saved files are byte-identical. The original generator,
+model and worker, retained renderer and optical-navigation code match 1.24.
+Only the new demo/profile selection and wider view fitting are added. Evidence:
+build/expanded25-validation.json and expanded25 model/native logs.
+
+Earlier validation follows.
+
+YORU / TOKYO 1.24.0 — OPTICAL NAVIGATION VALIDATION
+
+PASS GPU FEEDBACK CONTINUITY
+--optics-navigation-check verifies actual retained light after incoming light
+has been removed. It follows pan, zoom in, zoom out, a combined move and logical
+rescaling against independent world-coordinate predictions. Panning to new space and back
+leaves neither border smears nor a stale ghost.
+
+PASS FULL RENDERER AND SOURCE IDENTITIES
+Native cache tests assert no optical history clear on camera or zoom changes,
+alongside existing picking, material, undo, load, quality and view checks. Optical
+controls, calm mode, flow updates, native-resolution compositing and the saved
+large-city camera benchmark pass. 709 projection checks and 1,737,600 rendering
+checks include affine camera mapping and stable optical source slots.
+
+PASS SAVES AND SIMULATION
+All eight actual save files remain byte-identical. Thirteen model source files,
+City.h and the simulation worker match the previous release byte-for-byte.
+Diagnostics use isolated copies. Evidence: build/optics24-validation.json and
+optics24 native, GPU and unit-test logs.
+
+Earlier validation follows.
+
+Native asynchronous route and district diagnostics now use bounded completion
+deadlines, independently of the faster display loop. All eight native checks
+pass. These waits are confined to explicit diagnostic methods.
+
+YORU / TOKYO 1.23.0 — RENDERER VALIDATION
+
+PASS RENDERING GEOMETRY
+1,737,565 independent rendering checks cover original curve corner equations,
+five tessellation buckets within the existing error bound, colours, remote
+geometry, atlas signatures and culling. Native checks and their results are
+recorded in build/fps23-native-results.json, including retained transfer reuse
+through a camera move. Visual captures compare the old and new full city.
+
+PASS SAME CITY AND MODEL
+All four timed playing runs start at tick 12696, commit exactly three ticks and
+save identical state. The thirteen model source files, City.h, simulation worker,
+CityMachine and optical shaders are byte-identical to the previous source ZIP.
+All 8 actual save files remain byte-identical. Only isolated copies are used.
+
+MEASURED PERFORMANCE
+Playing 44.7 to 68.9 FPS; animated city views 44.6 to 72.5 FPS, two alternating
+runs per release at the same settings. Normal paced presentation averages
+56.2 FPS, P95 22.0 ms, including city forecasts. Detailed sampling and tail
+latencies are in RENDER-PERFORMANCE.txt; source data in fps23-comparison.json.
+The city and optical settings are retained. Subpixel rasterization and stroke
+overlap can differ after the renderer change; earlier exact-image claims below
+refer to their respective historical release.
+
+Earlier validation follows.
+
+YORU / TOKYO 1.22.0 — GPU BATCH STREAMING
+
+PASS MEASURED FPS TARGET
+The same large city, resolution, 4x MSAA request and detail settings exceed the requested
+50% FPS increase. Across three playing runs per upload mode, mean throughput is
+12.1 to 40.4 FPS (+233%). Animated overview/crown/pan improves 17.2 to 43.3 FPS
+(+152%). Independent same-binary and cached-view comparisons confirm the gain.
+RENDER-PERFORMANCE.txt describes sampling, variations and reproduction.
+
+PASS EXACT IMAGES AND MODEL OUTCOMES
+Six raw scene captures match the previous renderer and legacy upload mode.
+Six complete fixed-clock optical composites also match byte-for-byte, preserving
+Afterimage pigment, filaments, feedback and bloom. No resolution, shader, detail
+or effect reduction is used. Every playing run finishes with the identical saved
+city after exactly three ticks. Simulation source and save schemas are unchanged.
+
+PASS RENDERING AND INTERACTION
+1,326,301 rendering-resource checks pass. Native cache invalidation, minimal UI,
+diagram, chained route/dependency, lift services/daily demand and district-volume
+checks pass at 960x700. The GPU patch only streams transient batch buffers and
+skips attributes absent from the active shader; retained mesh/index paths remain.
+Normal saved-large-city launch and prior controls are retained. Ten original
+saved city files are checked against their pre-task byte hashes.
+
+Earlier release validation follows.
+
+YORU / TOKYO 1.21.0 — LIFT SERVICES AND DAILY DEMAND
+
+PASS TRANSPORT MODEL
+Dedicated checks cover finite car-time sharing, overlapping through-rides sharing
+their physical flight capacities, car upgrades, local/express stopping floors,
+actual two-bank interchange via a sky lobby, shaft gaps, blackout egress,
+passenger/freight reservations, portered goods, real heavy-goods shafts,
+maintenance across midnight, time-of-day trip pressure, evening direction,
+normalized employment, persistence, strict invalid metadata and material balance.
+An approach-walkway bottleneck is distinguished from a binding lift, and competing
+food/material deliveries consume the same real freight capacity. No inspection
+forecast changes authored stock, residents or plans.
+
+PASS ALL EXISTING REGRESSIONS
+All thirteen city, district, route/provenance, launch, projection, render-resource,
+route-frontier, vertical, ecology, resilience, depth, construction and megacity
+suites pass. The dense preset retains 648 buildings, L0–L12, full services and
+support through six ticks. The existing minimal native HUD retains eleven targets.
+
+PASS WORKER AND SAVE COMPATIBILITY
+The worker matches complete serial results through three ticks on the original
+18,640-person city and on a schema-eight daily-demand/lift-plan city. Coverage
+includes every through-ride physical flight, car allocation and landing queue,
+plus utility provenance and gateway trade. Stale input, undo, pause, load and
+shutdown checks pass; workers perform no file writes.
+Legacy cities retain steady demand and their original save schema until new
+transport settings are applied. Metadata uses schema eight at the same path.
+All ten actual saved city files remain byte-identical during isolated development.
+
+PASS NATIVE CONTROLS AND RENDERING
+Wide and 960x700 transport checks exercise draft isolation, rendered Apply,
+daily demand, express stops, evening direction, maintenance suspension and undo.
+Compact service and queue captures are visually inspected. District, minimal-UI,
+cache and route native checks pass. All six raw flow scene hashes match at the
+original 1380x790 window size; renderer quality and shaders are unchanged.
+Queue markers are aggregated per landing once per forecast, then display up to
+64 visible markers. Service-plan queue lists expose all landings by scrolling.
+
+MODEL LIMITS
+Queues represent unmet requests in the current ten-minute interval, with material
+remaining in source inventories. They are recomputed rather than stored as
+individual passenger bookings. Clearance is an estimate from the reserved car
+budget; exhausted reservations show that no service time is available. Timed
+maintenance removes one car; real existing workshops still provide parts-fed
+repairs. This release makes no unmeasured frame-rate claim.
+
+Earlier release validation follows.
+
+YORU / TOKYO 1.20.0 — DISTRICT VOLUMES AND EXCHANGES
+
+PASS DISTRICT MODEL CHECKS
+455 checks cover floor-separated ownership, detached volume unions, overlap and
+invalid-save rejection, atomic application and undo, physical-city preservation,
+real operating caps, constrained priority dispatch, warehouse reserve protection
+and critical release, exact utility/goods/people exchanges, real gateway trade,
+shared lifts and risers, filters, conservation and schema-seven round trips.
+A reserve test explicitly rejects moving alloy over a passenger-only connection,
+then proves protected/critical dispatch through a real road and goods lift.
+
+PASS EXISTING SYSTEMS AND BACKGROUND SIMULATION
+All thirteen model/resource/launch suites pass, including 11,957 route and trace,
+2,750 construction, 1,326,301 rendering, 808,931 route-frontier and 116,065 depth
+checks. The dense preset retains 648 buildings, L0–L12, full service and structural
+support through six ticks. Worker checks pass on both the actual 18,640-person
+save (1,888 checks) and an isolated three-district schema-seven save (2,470).
+Serial and background forecasts agree through three ticks, including exact
+utility provenance and gateway trade, with no partial publication or file writes.
+
+PASS COMPLETE DEFAULT-CITY COMPARISON
+The saved large city without custom districts matches version 1.19.0 byte-for-byte
+in four complete forecast snapshots: opening and three ticks. Each snapshot
+includes persisted state, building services/production/staffing/access/maintenance,
+every edge and load/loss, transfer motors, utility provenance, shipments,
+journeys, coverage, heads and financial totals. Untouched cities still serialize
+schema six. Metadata-bearing district saves use schema seven at the same path.
+
+PASS NATIVE UI
+The district diagnostic passes at wide and 960x700 window sizes. Rendered controls
+exercise two-corner drafting, Apply, caps, one-edit undo, multi-floor ownership,
+real exchanges, the city trace, water-only floor tracing, detached annexes and
+shared-link Locate. Inspection and cancelled drafts retain identical city state.
+The compact operations and trace captures are visually inspected. Existing route,
+cache, minimal-UI and diagram native checks pass; the HUD retains eleven targets.
+
+PASS RENDER PRESERVATION
+All six raw flow scene hashes match the earlier release at matching 1380x790
+logical dimensions. An initial comparison used the larger fitted window and
+therefore different pixels; repeating at the original size resolves it exactly.
+No renderer quality, geometry or shader reduction was introduced. District
+analysis uses one background read-only snapshot and a bounded overlay.
+
+SAVE PROTECTION AND DELIVERY
+All ten actual save files remain byte-identical during isolated checks. Normal
+launch retains megacity-dense/city-v6.json and its full-city fit. Neither a district
+draft nor an analysis snapshot can save. Temporary comparison sources/binaries
+are removed after verification; the app and distribution archives are replaced
+in place. Earlier validation history follows.
+
+YORU / TOKYO 1.19.0 — CONTINUOUS ROUTES AND DEPENDENCY TRACING
+
+PASS ROUTE AND PROVENANCE MODEL CHECKS
+11,957 checks cover chained surfaces, ramps, bridges and multi-stop lifts; real
+road capacity; clearance and shaft collisions; explicit supports; affordability;
+complete-project undo; stale-preview rejection; exact utility/motor quantities;
+provider direction; channel filters; and read-only dependency inspection.
+
+PASS EXISTING SYSTEMS
+City, projection, rendering resources, vertical topology, ecology, resilience,
+production depth, dense demo and launch-profile regression suites pass. The
+existing material/bridge construction suite passes 2,750 checks. The worker
+passes 2,350 checks on the actual 18,640-person save, including exact serial
+utility provenance, three ticks, stale edits, pause, undo and no save writes.
+
+PASS COMPLETE SIMULATION COMPARISON
+Four complete snapshots of the saved dense city match 1.18.1 byte-for-byte at
+opening and after each of three ticks. Comparison includes authored state,
+building services, all edges and loads/losses, transfer motors, shipments,
+journeys, utility coverage, heads and household safety. Provenance is derived
+inspection data; it does not alter dispatch or persisted schema-six state.
+
+NATIVE CHECKS
+The route/trace diagnostic exercises rendered transfer choices, waypoint removal,
+queued Build, one-project undo, filters, upstream providers, floor portals,
+power failure and restoration. Wide and 960x700 captures are inspected. Existing
+cache, construction, diagram and minimal-UI checks pass. Default HUD retains
+its eleven targets. An initially unrestricted diagram diagnostic failed; it
+passes with physical input isolated. Automated diagnostics now use that input
+isolation consistently; normal play retains its controls.
+
+RENDERING AND RESPONSIVENESS
+All six raw incremental-flow scene hashes match the prior release. Existing
+quality, shaders, geometry caches and abstract building forms remain. Native
+trace overlays use completed forecast paths and cache their analysis. Preview
+validation uses one bounded background State snapshot; superseded/cancelled
+requests cannot publish or place geometry. Large edit commits still perform
+the existing complete city forecast once.
+
+On the actual dense save, ten direct staging samples measured 32.22 ms median
+(47.06 ms maximum); that work now runs off the drawing thread. Building a full
+upper-home upstream trace measured 6.35 ms median (8.61 ms maximum), returning
+870 exact paths. This analysis is cached between relevant changes. The overlay
+shows up to 96 paths with explicit filtering/isolation access to every row.
+See RENDER-PERFORMANCE.txt for forecast timing context.
+
+SAVE PROTECTION
+All ten original saves remain byte-identical during isolated development checks.
+The normal app still resumes megacity-dense/city-v6.json and fits the full skyline.
+No draft or preview worker has a file path or save capability.
+
+PREVIOUS VALIDATION
+
+YORU / TOKYO 1.18.1 — RESUME THE LARGE CITY
+
+PASS LAUNCH PROFILE REGRESSION
+25 checks cover normal app/diagram defaults, explicit starter access, the existing
+fresh/blank and isolated-data behaviours, diagnostic fixtures, explicit demo
+combinations, contradictory flags and the existing dense/starter save paths.
+Contradictory --demo --starter flags fail before creating a window.
+
+PASS SIGNED APP SMOKE CHECKS
+The signed app opens copied dense and starter saves independently. The dense
+copy also opens in diagram mode. Both fixture files remain byte-identical.
+An absent dense save creates 3,679 tiles across all 13 strata, L0 through L12.
+All ten original save files remain byte-identical during these checks.
+
+SCOPE
+Only launch selection and initial skyline fitting change. Every existing source
+file in the renderer, simulation, city preset, persistence and worker is identical
+to 1.18.0. Existing performance optimisations and schema-6 saves are retained.
+The separate starter and older megacity save locations are preserved.
+
+PREVIOUS VALIDATION
+
+YORU / TOKYO 1.18.0 — EXACT INCREMENTAL FLOW UPDATES
+
+PASS RENDERED EQUIVALENCE
+1,326,301 renderer checks cover legacy colour bytes, threshold/clamping and
+alpha-byte boundaries, curves, culling, surfaces, prototypes and remote geometry.
+The GPU check compares six complete RGBA scenes with a forced full rebuild.
+Changed services, producer/consumer productivity, unchanged output bytes, power
+loss and restoration match exactly. Sparse nonzero-offset uploads are exercised.
+The initial image is restored exactly after recomputing the original forecast.
+Authored state remains unchanged throughout the image check.
+
+PASS PLAYING CHECK
+Two input-isolated alternating runs per mode commit three ticks from identical
+city copies. Each mode publishes exactly three results and every saved city is
+byte-identical. Camera, scene size and physical framebuffer stay fixed. No other game process
+is present before any final timing run. There
+are six full rebuilds in the diagnostic baseline and none during the six ordinary
+incremental updates. Actual frame/update timings are in RENDER-PERFORMANCE.txt.
+
+SCOPE AND REGRESSION
+The model, route queue, simulation worker, persistence, optical shaders and
+abstract building forms are byte-identical to 1.17. Existing native cache,
+optics, diagram, construction and minimal-UI checks cover gameplay and picking.
+No route simplification, service rounding, dropped simulation work, quality
+reduction, shader fetch or persistent state is introduced. Additional CPU-side
+colour/range metadata enables the smaller GPU transfers.
+
+PREVIOUS VALIDATION
+
+YORU / TOKYO 1.17.0 — SMOOTHER CITY MACHINE
+
+SIMULATION OWNERSHIP AND EQUIVALENCE
+The display thread owns the live City. One worker copies only State, performs
+the unchanged City::step and returns a complete forecast. It has no file path and
+is read-only. A complete schema-6 input comparison rejects a result after an edit
+or a different load; a paused/modal/painting frame does not accept a late tick.
+The comparison covers every persisted tile, building, connector, history, event,
+policy and city setting without allocating JSON on the display thread.
+
+SimulationWorkerTests.cpp checks complete serial equivalence through three ticks,
+including full edge/load/loss records, shipments and journey paths, services,
+water heads, home exits and blackout access. It tests valid mutations of more
+than sixty saved input fields, overlapping-job rejection, no partial publication,
+no save writes, edit/undo, pause, different-save and shutdown guards. The actual
+18,640-person saved city passes. Longest submission in the dense check: 3.10 ms.
+Model/persistence sources are byte-identical to 1.16, including RouteFrontier.h.
+
+RENDERING AND NATIVE UI
+421,681 rendering-resource checks and 133 projection checks pass. Native checks
+cover image reuse, edits, material conversion, undo, service changes, load,
+resize, all quality modes, flow-layer indices and frozen/advancing flow tables.
+Additional checks cover moving-view cache bypass, repeated diagram/machine
+switches, live floor hit bounds, rain toggles and inspection. Optics, diagram,
+construction and minimal-UI regression checks preserve their authored snapshots.
+Overview, upper-city and complete L6 diagram captures are inspected.
+
+See RENDER-PERFORMANCE.txt for measured FPS/frame times, reproduction and limits.
+Raw data and test logs are retained under build/fps-*. Original save hashes are
+checked independently; every benchmark uses a copied city directory.
+
+PREVIOUS MODEL VALIDATION
+
+YORU / TOKYO 1.16.0 — PACKED ROUTE PRIORITIES
+
+SCOPE
+RouteFrontier.h stores the existing nonnegative cost/node ordering in one integer
+key. Simulation.cpp uses its reusable binary heap for route and distance searches
+and stops draining pending routes beyond the existing cost budget. No game rule,
+model content, path, provider order, capacity, head, access or trip limit changes.
+Rendering, UI, construction and persistence sources are unchanged from 1.15.
+Main.cpp/CMake update the version; build.sh runs the new queue checks. CMake also
+builds the calculation-only SimulationBenchmark.cpp diagnostic.
+
+PASS ORDERING AND MODEL EQUIVALENCE
+808,931 queue checks compare against pair-priority queues, covering random and
+out-of-order insertions, ties, duplicate entries, partial reset/reuse, integer
+boundaries, empty pop and negative-input guards.
+The 1.15 reference executable and the final packed-queue model match complete
+forecasts exactly for dense, existing-save, total-exchange-outage and remote-world
+fixtures. Each case has three snapshots through two committed steps. Records
+include authored state, paths for every shipment/journey, edge loads and losses,
+service levels, water heads, independent exits, blackout flags and safety totals.
+The prior compressed references are directly reverified against the 1.15 binary.
+Equality hashes/sizes: build/frontier-forecast-equality.json. The final check runs
+after both route selection and full-distance searches adopt the packed queue.
+
+PASS REGRESSION
+All model suites pass: 51 city, 116,065 depth/conservation, 25,654 vertical,
+61,564 ecology, 33,418 resilience and 2,750 construction checks, plus the tall demo
+and six simulation ticks. The 421,681 rendering assertions and 133 shared
+projection checks pass. Native render-cache and minimal-UI checks cover real
+edit/undo/load, service and quality changes, all layers and levels, inspection,
+kernel tabs, plans, economy, immersion and minimum-size controls.
+Final builds are checked for warnings. Logs: build/frontier-*-tests.log,
+build/frontier-{final-build,cache-check,minimal-check}.log.
+
+PERFORMANCE
+The new diagnostic excludes loading, rendering and metric export. After one warm
+forecast, each process records five evaluate calls. Two alternating reference/
+optimized runs give ten samples per city/version. Median calculation CPU is
+23.6% lower for the dense city, 23.8% lower for the existing-save copy and 21.0%
+lower during the exchange outage. Authored-state and measured output metrics
+remain equal. These observations do not establish fixed frame rates.
+Raw results: build/frontier-simulation-timings.json. The original CPU sample and
+queue-variant comparison remain available. RENDER-PERFORMANCE.txt describes scope
+and reproduction. Every writable native diagnostic uses build/qa-frontier-*
+folders; original user saves are never writable test fixtures.
+
+PREVIOUS CONNECTIVITY AND GAME VALIDATION
+
+YORU / TOKYO 1.15.0 — FASTER CONNECTIVITY ANALYSIS
+
+SCOPE
+Simulation.cpp prepares ground-destination masks once per forecast, reuses compact
+exit-search arrays and caches building docks with inline node storage. Ordered
+graph IDs, provider/heap tie-breaks, FIFO traversal, residual cancellation, rules,
+resource delivery and safety semantics remain. Only Simulation.cpp and Main.cpp
+version text change at runtime; CMake bumps the release and EfficiencyMetrics.cpp
+adds explicit safety fields to its comparison records. Rendering, UI, content,
+construction, persistence and schema-six save code are unchanged from 1.14.
+
+MODEL EQUIVALENCE
+The 1.14 reference and final optimized executable produce byte-identical forecasts
+for the dense demo, a frozen copy of the existing city and a complete ground-
+exchange outage. Each record contains three snapshots through two committed steps,
+including per-home exit counts/blackout flags, safety totals, all deliveries and
+journeys with paths, edges/load/loss, coverage, water head and authored state.
+The outage case confirms zero known ground exits. The additional remote-world
+comparison moves the full vertical city by -900,000 on each horizontal axis and
+checks the same complete forecast through two steps.
+References: build/exit-reference-*.json.gz. Equality hashes and sizes:
+build/exit-forecast-equality.json and build/exit-remote-equality.json.
+
+REGRESSION AND PERFORMANCE
+All final model suites pass: 51 city, 116,065 depth/conservation, 25,654 vertical,
+61,564 ecology, 33,418 resilience and 2,750 construction checks, plus the tall demo
+and six simulation ticks.
+Native --render-cache-check covers edit/undo/load, service changes, picking,
+quality modes, all three flow layers and paused/advancing shape reuse.
+Native --minimal-ui-check covers all layers, levels, catalogue, inspector, every
+kernel tab, economy, plans, immersion and minimum-window controls.
+421,681 render assertions and 133 shared projection checks pass.
+Final build logs are checked for warnings. Logs: build/exit-*-tests.log,
+build/exit-{final-build,cache-check,minimal-check}.log.
+
+Paired CPU measurements show 8.2% less process CPU on the dense city, 10.7% on the
+existing-city copy and 18.9% during the outage. These are forecast-command CPU
+measurements, including file loading and metric export, not a fixed FPS promise.
+Raw timings: build/exit-routing-timings.json. The earlier exit-only pass is also
+retained. Rendering source files are byte-identical to 1.14.
+
+Every writable diagnostic uses build/qa-exit-* folders or explicit temporary
+forecast files. User save paths are never writable test fixtures. Earlier scratch
+captures were pruned after the disk filled; source, saves, root previews and
+current flow/abstract comparison captures remain.
+
+PREVIOUS FLOW AND GAME VALIDATION
+
+YORU / TOKYO 1.14.0 — SHARED FLOW GEOMETRY
+
+SCOPE
+The native flow renderer shares animated bend/edge calculations through a small
+float texture. Layer index buffers skip hidden power/water/rail geometry without
+duplicating vertex data or changing the combined draw order. Simulation.cpp reuses
+route-search storage and uses epochs to initialize only
+touched nodes. Provider ordering, heap tie-breaks, live residual edge checks and
+simulation rules are preserved. Content, construction, save schema and abstract
+forms are unchanged. Other sources are byte-identical to 1.13 except rendering
+resources/statistics, native cache checks, Main.cpp diagnostic/version plumbing,
+Kernel.cpp path views and the expanded EfficiencyMetrics.cpp fingerprint helper.
+People/freight overlays retain the same segments without route copies. The diagram
+is unchanged.
+
+PASS NUMERICAL AND NATIVE CHECKS
+421,681 rendering assertions, including 228,480 new comparisons of the shared
+shape result to the original per-corner equations. Every LOD, strand, both sides,
+phase, tile direction, short building contact and chunk-local offset is covered.
+Corner error stays below 0.00025 logical world pixels before zoom. The 133 shared
+projection checks pass. The Release app and tests build without warnings.
+
+--render-cache-check additionally verifies paused shape reuse, index partition
+across all three service views, restoration of the full draw list, one update on
+changed flow time, reuse on unchanged time and animation without mesh rebuilds.
+Existing edits, materials, service appearance, undo/reload, picking, floors,
+camera, resize and Native/Fast transitions also pass.
+--minimal-ui-check verifies the dense fixture and every layer, level, catalogue,
+inspector, all kernel tabs, plans, economy, immersion and minimum window bounds.
+
+PERFORMANCE AND VISUAL QA
+The original and optimized executables ran the same isolated 648-building dense
+fixture at 2760 x 1580 Native resolution. Four warm and twenty measured frames
+cover full skyline, crown, pan, diagram and scene-only phases; repeated runs and
+all raw results are retained. The shared table contains 816–1,360 samples in these
+views. Host contention prevents a stable FPS claim; RENDER-PERFORMANCE.txt records
+the work reduction and measured limits. The diagram is pixel-identical. Machine
+mean RGB differences remain below 0.08 out of 255 including live rain. The crown
+capture was inspected. The original geometry, four strands and draw order remain.
+Both fixtures and exact authored-state snapshots are unchanged.
+
+Logs: build/flow-{final-build,render-tests,projection-tests,cache-check,
+minimal-check}.log. Timings/captures: build/flow-{reference,optimized}* and
+build/flow-comparison.json. Every diagnostic uses an isolated build/qa-flow-*
+folder; the user's original city files are never used as writable test fixtures.
+
+MODEL EQUIVALENCE
+The original 1.13 and optimized simulations have byte-identical complete forecasts
+for both the dense demo and a frozen copy of the existing saved city. Three
+snapshots per city cover evaluation and two committed steps. Authored state,
+service levels, edges/loads/loss, shipment and journey paths, connector utilization,
+coverage and water head match exactly. Equality hashes and raw forecasts are in
+build/flow-forecast-equality.json and build/flow-full-{reference,optimized}-*.json.
+All model suites pass: 51 city, 116,065 depth/conservation, 25,654 vertical,
+61,564 ecology, 33,418 resilience and 2,750 construction checks, plus the dense
+demo's layout/services/access/save checks and six simulation ticks. Logs are
+retained as build/flow-*-tests.log. Alternating CPU measurements on both fixtures
+show 8.5–8.6% lower median process CPU for loading/evaluating the city; raw results
+are in build/flow-routing-timings.json. This does not guarantee a fixed frame rate.
+
+PREVIOUS ABSTRACT FORMS AND GAME VALIDATION
+
+YORU / TOKYO 1.13.0 — ABSTRACT BUILDING FORMS
+
+SCOPE
+Seven procedural form families replace literal facades and roof ornament in the
+machine view. Flat blocks, blades, paired masses, drums, plates, wedges and portals
+retain the prior tile footprint and height envelope. Function colours, one live
+operating point, service warnings, inspection and construction ghosts remain.
+The diagram and optical/network systems keep their existing presentation.
+
+Changed source units: BuildingForms.h, CityRendering.cpp, RenderAssets.cpp,
+RenderResources.cpp, RenderChecks.cpp and the Main.cpp version text. City.cpp/h,
+Simulation.cpp, Production.cpp, Spatial.cpp, Infrastructure.cpp, Construction.cpp,
+Demo.cpp and Persistence.cpp are byte-identical to 1.12. No model or save rule
+changed. The minimal UI and full gameplay controls remain.
+
+PASS RELEASE CHECKS
+The final Release app and render_tests build without warnings.
+193,201 rendering assertions pass, including shared prototypes across addresses
+and height/signal bounds for all twenty-eight component kinds and three upgrades.
+133 shared projection checks pass. Historical model tests below were not rerun
+because their implementation is unchanged.
+
+--render-cache-check: warm static reuse, topology edits, material conversion,
+service toggles, undo, reload, building hit targets, both views, resize and quality
+transitions. It also asserts zero unnecessary static-skin updates after settling.
+--construction-check: actual materials, rectangle platforms, piers, skybridges,
+frames, floor plans, upper floors, section controls and undo.
+--minimal-ui-check: dense fixture, all layers/levels, catalogue, component picking,
+exclusive inspector, complete kernel, plans, economy, immersion and minimum size.
+--demo-check: actual new dense-city creation, L0–L12 fit, skyways, arterial, rail,
+cutaway and shared authored state.
+
+VISUAL QA AND CACHE WORK
+The Native benchmark inspected the complete 648-building, 15,229-person fixture
+at 2760 x 1580, with crown, pan, L6 diagram and scene-only views. Captures show
+solid drum sides, simple uninterrupted masses and clear spaces through paired
+and portal forms. The construction machine view was also inspected. The fixture
+remains byte-identical; the benchmark verifies authored-state equality.
+Measured fixed-view phases had zero sprite updates and misses. Camera motion
+introduced seven new prototypes in measured frames with zero misses. Performance
+work counts do not establish a stable FPS gain on a shared host.
+Logs/captures: build/abstract-forms*, build/abstract-*-check.log,
+build/abstract-construction-*.png, build/abstract-render-tests.log and
+build/abstract-projection-tests.log. Every diagnostic uses a separate
+build/qa-abstract-* data folder; no diagnostic edits use the user's city.
+
+PREVIOUS MINIMAL UI AND MODEL VALIDATION
+
+YORU / TOKYO 1.12.0 — THE CITY FIRST
+
+SCOPE
+The native interface is reorganized around one forty-logical-pixel control bar.
+Ten default buttons replace thirty-five. City metrics and map, all fifteen layers,
+all thirteen levels and section controls, saves, appearance and help appear on
+request. Build and selection use independent, mutually replacing drawers.
+Component inspection retains its full-height controls and scrolling. Active tools
+have a temporary labelled chip. Machine and diagram both support chrome-free F2
+views; hidden chrome leaves no invisible targets or active construction tool.
+
+Simulation, production, spatial/construction rules, content, dense preset and
+persistence sources are byte-identical to 1.11. No model, schema, resource economy,
+capacity, route, structural, care, wear or conservation rule changed. The renderer
+and Native/Balanced/Fast options are retained. New fitting margins use the freed
+canvas without changing game geometry or camera/input projection rules.
+
+PASS NATIVE UI REACHABILITY
+--minimal-ui-check runs on an isolated copy of the 648-building, 15,229-resident
+city. It invokes real rendered controls for run/pause, 1x/3x/8x speed, every layer,
+level selection, full stack/cutaway, vertical tools, the component catalogue,
+cancel, a single component inspector, the complete nine-tab kernel, resilience,
+plans, guide, economy and undo, and immersion/return. It checks the default target
+count, minimum-window bounds, exclusive drawers and no hidden click targets in
+both projections. Exact authored-state equality holds throughout after undo.
+
+PASS REGRESSION
+--render-cache-check: edits, materials, support/service appearance, undo, reload,
+picking, camera, resize and scene quality transitions.
+--diagram-check: construction, connected routes, plans, undo, projection and both
+views sharing the same authored city.
+--construction-check: materials, rectangle platforms, piers, bridges, frames,
+floor plans, upper floors, sections and actual palette hit targets.
+--vertical-check: elevated picking, stairs/lifts, undo, cutaway and spatial kernel.
+--depth-check: local stocks, workload/priority, district policy, reinforcement,
+undo, diagnostics and view switching.
+--ecology-check: people, engineering, step-free access, bearing, water head,
+transfer upgrades, reinforcement and undo.
+--resilience-check: valves, reserves, ground routes, outage probes, load paths,
+rendered control targets and immutable inspection snapshots.
+--demo-check: actual new-city action, L0–L12 skyline fit, skyways, arterial, rail,
+cutaway and shared persistent state. The fit check uses the new toolbar margin.
+The final exclusive-panel and immersive-diagram changes were rechecked with the
+minimal, diagram and construction checks after the full regression run.
+
+193,032 existing rendering assertions and 133 shared projection checks pass.
+Release app builds without warnings. Historical model tests below were not rerun
+because their implementation is unchanged. All native checks use YORU_DATA_DIR
+folders under build/qa-minimal-*; no diagnostic edits use the user's city paths.
+
+VISUAL QA
+The default city, layer chooser, component inspector, build catalogue, complete
+kernel, diagram and immersive machine captures were inspected or checked through
+the native harness. Component data remains available with more vertical room;
+there is no permanently expanded inspector or redundant global dashboard.
+Captures: build/minimal-final-{minimal,layers,inspector,build,kernel,diagram,
+immersive}.png; wide dense-city views: build/minimal-release-demo-check-*.png.
+Logs: build/minimal-final-*.log, build/minimal-release-*.log,
+build/minimal-render-tests.log and build/minimal-projection-tests.log.
+
+PREVIOUS FRAME-RATE AND MODEL VALIDATION
+
+YORU / TOKYO 1.11.0 — FRAME-RATE WORK AND RENDER QUALITY
+
+RELEASE SCOPE
+Release C++17 / macOS arm64. Final targets compile without warnings. Simulation,
+production, spatial/construction rules, the dense preset and persistence sources
+are byte-identical to 1.10. Existing schema-six saves retain their original paths.
+
+RENDERING
+Indexed network quads submit exactly one third fewer vertices: the dense skyline
+uses 1,278,472 instead of 1,917,708. Curve coefficients live in a fifteen-entry
+uniform table; seventeen phase pairs replace per-vertex curve trigonometry.
+All four strands, moving contacts, carriers and signals remain. GPU index chunks
+are bounded to 65,536 vertices and validated before upload.
+
+Static ground and structure surfaces reuse separate colour buffers. Camera motion
+uses direct rendering; stationary views selectively rebuild for edits, material,
+support, junction, floor, cutaway and framebuffer changes. The optical field is
+cached in full-precision float colour textures while its view and building inputs
+are stable, with the original direct field shader used during camera movement.
+Live feedback and motion continue each frame. All 2D targets omit depth buffers.
+
+Balanced is now the default: 75% of native scene width/height, about 44% fewer city
+pixels. Fast uses half of each dimension; Native restores full resolution. F4
+cycles modes; F3 displays FPS and the mode. UI and the diagram remain native.
+Unfocused interactive windows cap at 15 FPS; focused windows retain 60 FPS.
+
+PERFORMANCE LIMITS
+Controlled captures keep the native window at 2760 x 1580 pixels and the same
+paused dense-city fixture. All five phases and all slower results are reported in
+RENDER-PERFORMANCE.txt and build/framerate-*.json. Concurrent system and GPU work
+causes substantial variation. Native gains appeared in the skyline, crown and
+scene-only phases of the final run; panning did not show a reliable gain. No
+stable 60 FPS claim is made. Advancing simulation tick cost is unchanged.
+
+PASS VERIFICATION
+193,032 rendering assertions, including equivalence of the factored curve equation,
+LOD error bounds, conservative culling, keys for materials/support/services,
+view-dependent invalidation and remote chunk coordinates. 133 projection checks.
+--render-cache-check at 960 x 700 verifies warm reuse, conduit edit, material
+conversion, building disable, undo, save/load, hit targets, pan/cutaway, resize,
+Fast scene dimensions and returning to Native. All authored state is unchanged.
+--render-check at 1600 x 1000 (monitor fitted) verifies shaders, feedback, calm
+mode, workbench and service overlays with the new default Balanced setting.
+--diagram-check and --construction-check at 960 x 700 verify shared construction,
+plans, connected strokes, all deck forms, bridges, piers, frames, floors and undo.
+--demo-check at 960 x 700 invokes the actual dense-city menu action, fits the full
+L0–L12 skyline and checks upper skyways, arterial, rail, cutaway and shared state.
+All final release quality benchmarks complete all 120 frames, retain exact authored
+state and leave their isolated fixture files byte-identical.
+
+At matching Native resolution, the checked diagram city area is pixel-identical
+to 1.10. Crown mean/RMS differences are 0.078/0.887 RGB levels out of 255;
+scene-only differences are 0.029/0.691. Comparisons exclude changed UI hints and
+include live rain and extra 8-bit composition rounding. Visual inspection confirms
+intact equipment, coils, skyways and optical fields in Balanced mode.
+
+Logs: build/framerate-render-tests-final.log, framerate-projection-tests.log,
+framerate-release-*-check.log, framerate-release-*.json and
+framerate-visual-comparison.json. Every native diagnostic uses an isolated
+YORU_DATA_DIR. The model regressions below are historical; they were not repeated
+this turn because the model sources are unchanged.
+
+PREVIOUS 1.10 RENDERING AND MODEL VALIDATION
+
+YORU / TOKYO 1.10.0 — FASTER CITY RENDERING / 31 OCTOBER 2026
+
+RENDERING RELEASE
+Release C++17 / macOS arm64. Final app and render_tests targets compile without
+warnings. Existing raylib CMake deprecation notices remain. No runtime dependency,
+model rule, save schema, dense preset or world limit changed. Simulation,
+production, construction, spatial model, persistence and Demo.cpp are byte-identical
+to the preserved 1.9 sources in build/before-rendering-1.10/src.
+
+PERFORMANCE
+The same paused dense city and native 2760 x 1596 framebuffer were measured before
+and after. Median full-skyline frame time fell from 907.14 ms to 56.35 ms in one
+optimized run and 94.60 ms in the repeat: approximately 10–18 FPS versus 1.1 FPS.
+Network CPU submission fell from 628.60 ms to 2.72 ms in the repeat. The original
+89,401-tile empty-ground sweep is replaced by an analytic pass plus actual street
+junctions. Warm measured frames have no network rebuilds and no sprite misses.
+See RENDER-PERFORMANCE.txt for scenarios, methodology, exact measurements, visual
+approximations and limits. FPS varies substantially with host/GPU load. These
+paused rendering measurements do not measure advancing simulation tick cost.
+
+VERIFICATION
+PASS 136,627 rendering checks: bounded subpixel network curve error, conservative
+culling, distinct materials and equipment tiers, neighbour-junction updates,
+support and service warnings, all dimmed overlay styles, activity quantization,
+and chunk-local projection near both extremes of the horizontal world.
+PASS 133 shared projection checks.
+PASS --render-cache-check at 960 x 700: warm reuse, actual conduit edit, deck
+placement and material conversion, building disable, undo, checkpoint reload,
+building hit targets, pan/zoom, cutaway, overlays and diagram/machine switching.
+PASS --render-check at 1600 x 1000 (monitor fitted): shaders, native component
+field, feedback, calm optics, workbench and service overlays preserve state.
+PASS --diagram-check at 960 x 700: projection, construction, connected strokes,
+plans, undo, view switching and immutable authored city.
+PASS --construction-check at 960 x 700: deck materials, rectangular platforms,
+piers, skybridges, reusable frames, floor plans, upper levels, sections and undo.
+PASS --demo-check at 960 x 700: actual New city action, L0–L12 skyline fit,
+upper skyways, L2 arterial, L4 railway, cutaway and shared immutable city state.
+PASS two completed optimized native benchmarks, all five phases. Exact saved
+state is unchanged before/after; isolated fixture files retain SHA-256
+50cb7278f4b717a31e2776c8e2165ea8275a06f5c9dd202869155f713c8ed48a.
+Visual inspection confirms the complete overview, crown equipment and skyways,
+and the L6 top-down floor. The machine scene remains at native resolution;
+Afterimage feedback, bloom, live filaments and all tall structures remain.
+
+Logs: build/render-tests-final.log, build/final-*-check.log,
+build/render-{baseline,fill,final}.json and corresponding logs/screenshots.
+All diagnostic runs use independent YORU_DATA_DIR directories. Existing normal,
+old-demo and dense-demo saves are retained. This turn does not repeat the model
+regressions documented below; the model sources are unchanged.
+
+PREVIOUS 1.9 MODEL, DENSITY AND RELEASE VALIDATION
+
+YORU / TOKYO 1.9.0 — THE COMPACT VERTICAL CITY / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release. No new runtime or asset dependency. Final
+project targets compile without warnings; raylib's existing CMake deprecation
+notices remain. Existing cities retain schema six and stable connection IDs.
+
+DENSITY AND EFFICIENCY
+The authored opening state has 3,679 tiles, 648 buildings, 15,229 residents and
+382 connections. Six main towers contain 52 occupied floors, with inhabited
+interchange towers and residents at every stratum from L0 through L12.
+The ground extent is 77 by 35 tiles, versus 89 by 49 in the 1.8 preset.
+
+Compared at each preset's paused opening state after three warm-up ticks:
+                             1.8 demo          1.9 dense demo
+Population                   5,520             15,229
+Population / ground tile     1.26576473        5.65083488
+Mean work-route cost         11.48853027       7.56910444
+Delivered MW / resident      0.87420290        0.56414735
+Delivered water / resident   0.22862319        0.19377503
+
+This is about 4.5 times the density, 34% lower mean work-route cost, 35% less power
+and 15% less water per resident. These are in-game model quantities on authored
+presets, not fixed guarantees after growth or editing. The ground extent is 38%
+smaller. The world remains unbounded horizontally; this is the built footprint.
+Sources: build/density-baseline-metrics.log and build/density-buffers-metrics.log.
+
+SUPPORTED, SUPPLIED DENSITY
+Every main tower floor has homes, market access, workplaces or food production,
+gardens and rotating shared services. Every floor has actual goods-lift landings
+and loading streets; nutrients and market supplies use freight routes rather than
+spending passenger capacity. Local passenger lifts use tier two, with express
+crown links retained. Food production has Critical priority, added upper food
+floors, and smaller ground farms. Markets open with commissioned local food stock;
+subsequent replenishment is simulated through finite farms, gates and routes.
+
+Paired pressure stages, rain/waste-water recovery and L6 local generation serve
+six separate utility districts. Edge and rear bearing lines carry the added floor
+and loading mass through ordinary tier-three columns, decks and foundations.
+Opening food, power, water, care and leisure coverage are 100%. All occupied homes
+have supported, step-free access. No cells are unsupported and no structural
+member exceeds capacity; the peak opening bearing ratio is 0.788875.
+
+PASS demo_tests over eighteen additional ticks, through tick 21. Food, delivered
+power and delivered water remain at 100% on every recorded tick. No unsupported
+or stressed structure appears; peak bearing ratio stays below 0.790. Electricity
+and water remain conserved and statistics finite. Authored state round-trips
+exactly through the normal save parser, including all geometry and clearances.
+Output: build/density-endurance-model.log. The default build also runs the shorter
+six-tick version. Larger cities still use a full forecast on each simulated tick.
+
+ROUTE OPTIMIZATION AND REGRESSION
+Graph-local dock caches live only for one freshly constructed network. Component
+filtering skips impossible providers while retaining provider order, residual
+capacity, ceiling, accessibility and loss rules. No persistent or flow cache is
+shared across edits, valve changes or ticks.
+PASS exact forecast comparison with the original 1.8 Simulation.cpp on the dense
+opening fixture and two subsequent ticks: all saved state, per-building service,
+every edge load/capacity/loss, and transfer power/utilization/wait/maintenance are
+byte-identical. Files: build/density-reference-final.json and
+build/density-optimized-final.json. The reference uses the same model library and
+metrics harness, with the previous Simulation.cpp linked in place of the new one.
+The older 1.8 city also matches its earlier forecast fingerprint exactly.
+
+PASS 116,065 depth/conservation assertions; 61,564 ecology/access/pressure checks;
+33,418 resilience/pipe/reserve/memory checks; 25,654 vertical topology checks;
+2,750 construction checks; 51 city-system checks; 133 projection checks.
+Counts include repeated per-edge and per-resource assertions across ticks.
+Outputs: build/density-regression-*.log. Original compact starter, blueprint
+indices, Aftertaste and Afterimage projects remain unchanged.
+
+ROUTING MEASUREMENT
+Three alternating single-forecast runs of each Release metrics harness on the
+same dense fixture gave median 2.70685 s for the reference and 1.14011 s for the
+optimized engine, about 58% lower elapsed time. Individual timings varied with
+host load. This is an observed CPU forecast case, not a frame-rate guarantee or
+a fixed speedup for every city. Data: build/density-performance.json.
+
+NATIVE UI
+PASS --demo-check at requested 1600x1000, fitted to the available monitor, and
+960x700. The actual New city / Dense vertical demo action is exercised. Skyline,
+L6 floor plan, upper crown, L2 arterial, L4 railway and cutaway are captured and
+visually inspected. Fit assertions protect the controls and viewport edges.
+Inspection preserves the authored state exactly in both views.
+PASS --ui-test at 960x700 for construction, undo, plans, ticks, saves and overlays.
+Logs: build/qa-density-release/native.log, build/qa-density-release-small/native.log
+and build/qa-density-legacy/native.log.
+
+SAVE SCOPE
+--demo and Start Yoru Megacity.command now open megacity-dense/city-v6.json.
+The normal city and the prior megacity-demo/city-v6.json retain their original
+paths. The dense launcher reopens its edited city; --demo --fresh-city explicitly
+regenerates it. The in-game New city flow retains its dated backup before replacing
+a city. There is no automatic reset or conversion of an existing authored city.
+
+PACKAGED ENTRY CHECK
+PASS the signed staged 1.9 app --demo --smoke --fit twice at 960x700 with existing
+normal and 1.8-demo fixtures. The first launch writes 3,679 cells, 648 buildings
+and the L12 skyline into megacity-dense/city-v6.json. The second preserves that
+paused dense city exactly. Both earlier save SHA-256 hashes remain unchanged.
+Logs: build/qa-density-launcher/launch-1.log and launch-2.log.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.8.0 — THE TWELVE-LEVEL CITY / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release, with no new runtime or asset dependency.
+Final app/model targets compile without project warnings. Existing raylib CMake
+deprecation notices remain. No save-schema change: current cities remain v6.
+
+LARGE DEMO MODEL
+PASS demo_tests: 3,107 authored tiles, 317 buildings, 5,520 opening residents and
+348 physical connections across an 89-by-49 ground extent. Six inhabited towers
+and two interchange towers reach L12, with occupied L1, L3, L6, L9, L10 and L12
+neighbourhood floors. Every occupied building has supported walking and step-free
+access and receives over 90% of its own utility demand. Aggregate opening power
+and water delivery are 100%, food coverage is 100%, and unsupported cells are zero.
+The ordinary route model carries actual vertical work journeys.
+
+Roads occupy L0, L1, L2 and L3; rail climbs to L4 through four real ramp links.
+All ten connector kinds are present, including intermediate public doors,
+two-stop express shafts, independent pedestrian bridges and utility risers.
+The normal save parser validates geometry, clear corridors, materials and stable
+connection IDs. Full authored state round-trips exactly. Six further simulation
+ticks retain support, finite statistics and electricity/water conservation.
+
+Six physically separate cable/pipe districts share the public city. Paired risers,
+local power/water yards and L3/L6/L9 booster stages supply upper floors through
+ordinary finite edges. A central traction yard supplies its actual local circuit.
+The same six-tick check took 11.47 s after district partitioning, versus 22.44 s
+with the initial shared utility bus, on this execution host. This is a CPU model
+measurement, not a rendering-framerate guarantee; large forecasts remain costly.
+Output: build/megacity-circuits-final-model.log.
+
+EXISTING SYSTEMS
+PASS 51 city-system checks, including the compact starter and 300 running ticks.
+PASS 2,750 existing construction, bearing, bridge, transfer and persistence checks.
+PASS 133 shared-projection checks. Simulation rules, compact starter and existing
+blueprint indices remain unchanged. Original Aftertaste/Afterimage files untouched.
+Outputs: build/megacity-regression-city.log, -construction.log and -projection.log.
+
+NATIVE UI
+PASS --demo-check at requested 1600x1000 (fitted to 1380x799 logical) and 960x700.
+The actual New city / Large vertical demo action creates the authored city after
+saving a dated backup. Both sizes verify the skyline, L6 process floor, upper
+crown, L2 arterial, L4 railway and L6 cutaway. Fit assertions keep all visible
+floors within the viewport and below the controls. Both views preserve exactly
+the same authored state while paused. Captures are visually inspected.
+PASS --ui-test at 960x700 for ordinary construction, undo, plans, simulation,
+save/load and overlays. Final logs: build/qa-megacity-release/native.log,
+build/qa-megacity-release-small/native.log and build/qa-megacity-legacy/native.log.
+
+ENTRY AND SAVE BEHAVIOUR
+Start Yoru Megacity.command invokes --demo --fit. This uses a separate
+megacity-demo/city-v6.json and reopens the edited demo on subsequent visits.
+New city offers the large demo, compact starter and blank sandbox. Its existing
+backup runs before a replacement; the normal launcher retains its usual city.
+--demo --fresh-city explicitly regenerates the independent demo.
+
+PACKAGED ENTRY CHECK
+PASS signed staged 1.8 app --demo --smoke --fit twice at 960x700 with an existing
+normal city fixture. First launch writes all 3,107 cells and the L12 skyline to
+the independent demo file; second launch preserves that saved demo exactly.
+The normal city's SHA-256 remains unchanged on both runs.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.7.0 — STRUCTURE AND CIRCULATION / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release. All project targets built with
+-Wall -Wextra -Wpedantic; no project warnings in the final build. Existing raylib
+CMake deprecation notices remain. No external runtime or asset dependency added.
+
+MODEL VALIDATION
+PASS 2,750 construction-material, offset-bearing, bridge and circulation checks.
+PASS 25,654 established vertical topology, structure and movement assertions.
+PASS 116,065 production, utility, material and financial conservation assertions.
+PASS 33,418 resilience and household-memory assertions.
+PASS 61,564 ecology, access, bearing and pressure assertions.
+PASS 51 established city-system checks and 133 shared-projection checks.
+Counts include repeated per-edge and per-resource assertions across ticks, rather
+than independent scenarios. Outputs: build/construction-model-0.log through -2.log.
+
+New construction coverage: all four material capacities and spans; complete
+rectangular placement in either corner order; grouped undo; no partial floors
+on an oversized or unaffordable request; catwalk exclusion of buildings/vehicles;
+material conversion without invalidating existing occupants; individual pier
+segments bearing on a transfer podium; actual load propagation into offset ground
+foundations; transfer-floor removal, restoration and foundation failure probes.
+
+Span coverage: real walking and step-free routes over an explicit skybridge;
+no invented mid-span floor or junction; blocked building, route and deck placement
+inside reserved airspace; bridge closure disconnects a remote court; reversed
+landings cannot duplicate a connection. Straight and diagonal geometry, maximum
+span, and same-plane crossings between tile centres are checked. Crossing at a
+different elevation remains valid. New anchors contribute real bearing load.
+
+Circulation coverage: moving walks consume power and become slower, lower-capacity
+passive routes during outages; escalators never provide step-free access and
+remain stair routes without power; pedestrian ramps retain passive step-free
+access without creating a vehicle network. Express lifts share one physical link,
+serve only their two doors, consume power by span and stop in an outage. Painting
+an intermediate concourse does not attach it to the express shaft. Every forecast
+respects shared capacity, quantities, worker accounting and electrical supply.
+
+Frame coverage: all three reusable empty kits place atomically, have complete
+bearing paths before programmes are added, copy no residents and undo together.
+Existing occupied bridge corridors reject the entire frame. Original blueprint
+indices and the original starter quarter are retained; frames are appended.
+Schema six preserves materials and new connection IDs; malformed geometry/materials
+are rejected, while v5 decks import as ordinary slabs without layout changes.
+
+NATIVE VALIDATION
+PASS --construction-check at requested 1600x1000 (fitted to 1380x798 logical) and
+960x700. The actual rendered material, skybridge and frame cards select the
+intended tools/blueprint. Rectangle, pier and two-click bridge construction undo
+to the exact baseline. All palette pages, the working three-frame gallery,
+single-floor diagrams and cutaway are captured and visually inspected.
+PASS --vertical-check, --depth-check, --resilience-check, --ecology-check,
+--ui-test, --diagram-check and --render-check at 960x700 against the new model.
+Native outputs: build/construction-native-checks.log. All native diagnostics use
+isolated city directories and preserve authored state while paused.
+
+RULES AND SCOPE
+Slab/podium reach is four contiguous tiles, catwalk six and truss eight. Loads use
+abstract weights/capacities and shortest bearing paths; these are game rules,
+not finite-element mechanics. Upper columns may start only on another column or
+an immediately underlying transfer podium. Bridges use explicit endpoints and
+clear corridors; occupiable intermediate floors require deck cells instead.
+Moving walks are represented as bidirectional public links with shared capacity.
+Circulation remains routed batches rather than individual cabin scheduling.
+Both native views edit one open-ended city, with no win/lose condition.
+Original Aftertaste and Afterimage projects remain unchanged.
+
+SAVE COMPATIBILITY
+city-v6.json and checkpoint-v6.json hold the expanded construction model. Missing
+v6 cities import v5, then v4, v3, v2 or v1; checkpoint fallback follows the same
+order. New connection kinds are appended to stable prior IDs. Old decks default
+to ordinary slabs, with no new frames, residents or networks inserted on import.
+Original files remain preserved at their original paths.
+
+PACKAGED SAVE MIGRATION
+PASS staged 1.7 native app --smoke at 960x700 against isolated v1, v2, v3, v4
+and v5 cities. Each writes schema six, retains all 295 authored cells and every
+previous persistent field, and leaves its source file SHA-256 unchanged.
+The v3–v5 fixtures are copies of existing user saves; no diagnostic writes target
+the live user-save directory. The signed app passed codesign deep/strict checks.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.6.0 — THE RESILIENT MACHINE / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release. All app/model targets built with
+-Wall -Wextra -Wpedantic; no project warnings in the final build. Existing raylib
+CMake deprecation notices remain. No external runtime or asset dependency added.
+
+MODEL VALIDATION
+PASS 33,418 resilience, pipe-loss, reserve and household-memory assertions.
+PASS 61,564 ecology, access, bearing and pressure assertions.
+PASS 116,065 production, utility, material and financial conservation assertions.
+PASS 25,654 vertical topology, structure and movement assertions.
+PASS 51 established city-system checks and 133 shared-projection checks.
+Counts include repeated per-edge and per-resource assertions across simulated
+ticks, rather than that many independent scenarios. Final outputs are retained
+in build/final-model-0.log, final-model-1.log and final-model-2.log.
+
+Water coverage: leaking pipes withdraw real inlet volume, reduce downstream flow
+and respect edge capacity; source dispatch equals delivered, charged and lost
+water in the direct-source fixture. Valve isolation stops flow on a single feed;
+a physical parallel loop preserves delivery. Full repairs require isolation;
+repair retains the closed valve until reopened. Undo and pipe removal preserve
+valid state. Demand-driven booster cascades cover pipe losses when their inlet,
+electricity and route capacity permit; every stage is funded by actual delivery.
+
+Reserve coverage: normal consumers cannot drain protected energy/water; Critical
+consumers can release it through real routes and discharge limits. Stored MWh
+are debited by the exact ten-minute conversion. Invalid settings are rejected.
+An unpowered elevated reservoir supplies real gravity water at its own head,
+without gaining an extra stratum of pressure or creating any water.
+
+Resilience coverage: separate stairs and lifts provide independent routes to
+reachable public ground; two lifts behind one upper approach still count as one
+route. A second physical highwalk approach creates an alternative. Passive ramps
+preserve step-free ground access in a blackout. Probes distinguish general access
+from step-free loss; foundation probes identify dependent homes; a second bearing
+path can support the stack. Probe calls preserve authored state exactly. Bearing
+arrows expose the propagated foundation load rather than a decorative animation.
+
+Household coverage: unmet care persists and later visits clear it; finite clinic
+appointments prioritise total accumulated need over map order. Actual work-route
+cost drives fatigue; fatigue reduces workforce without duplicating residents.
+Empty homes accumulate neither unmet care nor fatigue. Inspection, forecasts and
+probes leave all persistent memory, pipes, reserve settings and inventories fixed.
+
+Persistence coverage: schema five round-trips new state; malformed pipe condition,
+valves, memory and reserve values are rejected. V4 migration retains every cell
+and transfer and gives neutral new defaults. Derived flow, loss, repair, route
+independence, blackout reach and probes are rebuilt rather than trusted from disk.
+
+NATIVE VALIDATION
+PASS --resilience-check at requested 1600x1000 (display fitted to 1380x798 logical)
+and at 960x700. The actual rendered Probe, Isolate and 50% reserve button hit targets
+are invoked and their edits undone. Transfer/core probes, valves, reserve controls,
+all four Resilience pages and bearing/leak/exit overlays preserve paused state.
+The upper-lift probe correctly exposes 142 starter residents losing step-free
+access. Panel and overlay captures at both sizes were visually inspected.
+PASS --ecology-check, --ui-test, --diagram-check, --render-check, --depth-check
+and --vertical-check at 960x700 against the final model. The existing machine,
+floor plan, construction, core upgrades, snapshots and clock remain operational.
+Every native check uses an isolated city directory; outputs are retained in
+build/final-native-checks.log.
+
+RULES AND SCOPE
+This remains a fictional, open-ended city builder. Route independence is capped
+at two and concerns explicit upper links to reachable ground; it does not count
+every possible path. Blackout reach excludes powered transfers and station arrivals.
+A probe removes one chosen transfer or core segment, then recomputes the same
+forecast; other failure cases can be probed separately. Structural loads and
+capacities are abstract, not finite-element mechanics. Water uses head, quantity,
+loss and finite routes, not hydraulic pressure dynamics. People remain routed
+batches rather than individual agents. No win/lose condition was introduced.
+Both projections edit one model. Aftertaste and Afterimage remain unchanged.
+
+SAVE COMPATIBILITY
+The app writes city-v5.json and checkpoint-v5.json. A missing v5 city imports v4,
+then v3, v2 or v1; checkpoint restore follows the same ordered fallback. Original
+files are preserved. New pipe fields start sound/open; fatigue, care/leisure
+backlogs and reserve settings start neutral. No programmes or cells are inserted
+into an imported city. Existing physical constraints can expose unmet needs.
+
+Packaged-app smoke tests imported isolated v1, v2, v3 and v4 saves into v5.
+Recursive field comparisons, matching sparse cells by their full coordinates,
+verified all original authored fields and no added cells. SHA-256 hashes verified
+the four legacy input copies remained unchanged. The original city files were
+never used as a test write destination.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.5.0 — THE INHABITED MACHINE / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release. All app and model targets built with
+-Wall -Wextra -Wpedantic; no project warnings in the final build. Existing raylib
+CMake deprecation notices remain. No external runtime dependency was added.
+
+MODEL VALIDATION
+PASS 61,564 urban ecology, access, bearing and water-head assertions.
+PASS 116,065 depth and material/financial conservation assertions.
+PASS 25,654 vertical topology, movement and structural assertions.
+PASS 51 established city-system checks; 133 shared-projection checks.
+Counts include repeated per-edge and per-resource assertions across simulated
+ticks, rather than independent scenarios.
+
+New coverage: step-free worker profiles exclude stairs without duplicating the
+resident workforce; powered lifts unlock accessible jobs and visits; power cuts
+and mechanical shutdown remove that access; care/leisure journeys use actual
+shared pedestrian routes and bounded provider capacity; household health changes
+gradually; transfer wear and crowding only commit on ticks; service, capacity tiers
+and undo preserve state. Parts-fed workshop repair is shared across buildings,
+transfers and structural members and cannot exceed its finite crew budget.
+
+Structural coverage: cumulative weight reaches columns and foundations; heavy
+stacks overload their real load path; dependent upper networks close safely;
+reinforcing decks and complete cores clears the overload; a damaged foundation
+interrupts the stack and repair restores it. Analysis preserves authored tiles.
+
+Water coverage: no supply above source head; each route remains below its head,
+including an over-head hump on a path to a lower destination; a single booster
+has a finite rise; cascaded powered boosters deliver real inlet water to higher
+strata; no inlet or electrical supply means no boosting. Original water supply
+is not increased by pumps. Repeated forecasts preserve quantities, health,
+structural/transfer condition and queue memory. Per-link capacity, goods and
+utility conservation remain valid through the deeper starter city's ticks.
+
+Schema-four round trips include health, walkway/structure tiers, structural
+condition and transfer tiers, priorities, condition and crowding. Derived routes,
+repair allocation, head and service coverage are rebuilt. Malformed ecology
+fields and future formats are rejected; v3 imports retain every authored cell
+and transfer, with valid defaults for new persistent fields.
+
+NATIVE VALIDATION
+PASS --ecology-check at 1600x1000 requested (display fitted to 1380x797 logical)
+and 960x700. People and Engineering panels, ACCESS/BEARING/HEAD overlays,
+transfer upgrades and power priorities, whole-core strengthening, reinforcement
+painting and undo are exercised. The Engineering Core + button is invoked through
+its rendered hit target, then undone. Paused inspection returns exactly to the
+serialized baseline. Both panel sizes and overlay captures were visually inspected.
+PASS --ui-test, --diagram-check, --render-check, --depth-check and --vertical-check
+at 960x700 against the new model. The vertical-tool palette and inspector retain
+scrollable controls. Every diagnostic uses an isolated city directory.
+
+RULES AND SCOPE
+This is a fictional game model. Abstract bearing weights/capacities, head by
+stratum, mobility shares, appointments, travel budgets and health evolution are
+planning rules, not real engineering, medical or population estimates. Loads
+use shortest bearing paths with equal splits, not finite-element analysis.
+Water uses bounded head and quantity dispatch, not hydraulic pressure dynamics.
+People remain routed batches; fire egress, lift scheduling, private-access hours
+and ownership law are not simulated. No win/lose condition was introduced.
+The Afterimage machine view and Aftertaste floor diagram edit the same city.
+Original Aftertaste and Afterimage projects remain untouched.
+
+SAVE COMPATIBILITY
+The new app writes city-v4.json and checkpoint-v4.json. Missing v4 cities import
+v3, then v2 or v1; checkpoint restore uses the same ordered filename fallback.
+Packaged-app smoke tests imported isolated v1, v2 and v3 files into v4. A recursive
+comparison verified every original field, matching sparse tiles by (x,y,z), with
+no added cells. SHA-256 hashes verified all legacy inputs and the user's original
+v3 city remained unchanged.
+
+Original files remain at their old paths. No new modules are inserted into old
+cities. Inventories, settings, policies, residents, coordinates, transfers, clock
+and finances persist. Older rules can now expose genuine service/load deficits.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.4.0 — VERTICAL CITY / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release, all app and model targets built.
+-Wall -Wextra -Wpedantic: no project warnings in the final build. Existing raylib
+CMake deprecation notices remain. No new external runtime dependency is required.
+
+MODEL VALIDATION
+PASS 25,654 vertical topology, structural support, movement and conservation
+assertions. This includes repeated per-edge and per-resource checks, not 25,654
+independent scenarios.
+PASS 51 existing city system checks.
+PASS 116,064 depth and conservation assertions with the expanded spatial city.
+PASS 133 established shared-projection checks. Elevated-plane inverse projection
+and pointer-anchored zoom at L0, L1, L3 and L12 are covered by vertical_tests.
+
+Spatial coverage: independent (x,y,z) identity; horizontal-only adjacency; exact
+floor picking; unsupported-deck rejection of operation; continuous core bearing;
+four-tile deck span; foundation loss and structural undo; no implicit junctions
+between overlapping floors; utility risers; food couriers over stairs; real
+cross-level worker journeys; passive access during blackouts; powered lift
+failure; separate passenger and goods networks; base-fed continuous lift shafts;
+ramp geometry and reserved clearance; bounded freight and pedestrian capacity;
+no double allocation of workers; exact stock-flow conservation through transfers;
+schema-three round trips; malformed elevations; version-two L0 migration;
+reusable grounded 3D plans, no copied residents and complete plan undo.
+
+NATIVE VALIDATION
+PASS --vertical-check at requested 1600x1000 (display fitted to 1380x798 logical)
+and at 960x700. The two-click connector tool is exercised across a change of
+active floor, then undone. Drawing and picking agree on elevated planes in both
+views. Full stack, cut above, floor plan, bearing cores, road ramp, spatial kernel,
+transfer destinations and the vertical-tool palette were captured and visually
+inspected at both sizes. Diagnostic captures wait after modal changes so the
+swapped front buffer contains the actual panel.
+PASS --diagram-check: construction, connected strokes, plans, undo, shared state.
+PASS --render-check: Afterimage optics, calm mode, workbench and service overlays.
+PASS --depth-check: workload, priorities, regimes, reinforcement, undo, diagnostics;
+the city clock also advances correctly while the machine kernel is open.
+PASS --ui-test: construction, undo, plans, simulation ticks and checkpoint restore.
+Every native check uses an isolated save folder. UI, view and optical inspection
+leave paused authored state unchanged.
+
+RESEARCH AND SCOPE
+VERTICALITY-RESEARCH.txt records the primary references: Hong Kong Highways and
+Transport Departments, the Central walkway account and architectural research,
+City of London Barbican landscape guidance, the Barbican access guide, Historic
+England's MEA House listing and Newcastle's heritage record. These inform the
+spatial system. Stratum scale, spans, capacities, motor loads and route costs are
+fictional game rules rather than engineering measurements or design standards.
+
+The model routes costed batches of commuters and goods, not individual agents.
+Bearing reach is not structural-load analysis. Public concourses are explicit
+walkway tiles; ownership law, access schedules, disability access, fire egress,
+hydraulic pressure and real-city regulations are not simulated. The original
+Aftertaste and Afterimage projects remain unchanged.
+
+SAVE COMPATIBILITY
+city-v3.json / checkpoint-v3.json hold spatial data. Existing v2 or v1 city files
+are imported only when no spatial save exists, and are preserved at their original
+paths. Older coordinates become L0. Existing inventories, buildings, residents,
+city clock, credits and policies are retained. Checkpoint restore falls back to
+older checkpoint filenames. No elevated district is silently added to an old city.
+The N/B vertical-quarter plan can be placed into the retained city by the player.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 1.3.0 — MACHINE ECOLOGY / 31 OCTOBER 2026
+
+RELEASE BUILD
+C++17 / macOS arm64, CMake Release. All project targets compile with
+-Wall -Wextra -Wpedantic. Existing raylib CMake deprecation notices remain.
+
+MODEL VALIDATION
+PASS 51 city system checks.
+PASS 133 shared projection checks.
+PASS 72,144 depth and conservation assertions across independent fixtures and
+longer simulations. These include per-link capacity checks on every evaluated
+edge and per-resource ledger checks on every tested tick, rather than 72,144
+distinct scenarios.
+
+Coverage: deterministic non-mutating previews; all 27 component specifications;
+local physical inventories and disconnected districts; all industrial recipes;
+empty-input starvation and full-output back pressure; routed imports/exports;
+credit-limited imports; exact commit of material and financial forecasts;
+power/water conservation including charging; battery MWh conversion over a
+ten-minute tick and explicit storage efficiencies; discharge during outages;
+overdriven waste-to-water recovery bounded by actual input; local workshop
+repair and education; service priorities; finite edge capacity; reinforcement
+and grouped undo; district regimes; shutdown/overhaul; schema-two persistence;
+version-one migration; rejection of invalid inventories, settings and future
+formats; bounded history; a working expanded starter city.
+
+NATIVE VALIDATION
+PASS --depth-check at 1600x1000 requested (display fitted to 1380x798 logical)
+and at 960x700. Process, inventory, dispatch, district and history panels
+captured and visually inspected. Workload, service priority, district policy,
+reinforcement and undo preserve the city after reversal. The clock advances
+exactly one requested tick while the kernel is open, then pauses again.
+PASS --diagram-check: projection, construction, connected route strokes, plans,
+undo and both views preserve the shared city. All snapshots use isolated saves.
+PASS --render-check: the Afterimage machine optics, feedback, calm treatment,
+workbench and utility overlays preserve authored simulation state while paused.
+PASS --ui-test: native construction, undo, plans, city ticks and save/load.
+The updated source does not modify Aftertaste or Afterimage.
+
+Save v2 is written to city-v2.json / checkpoint-v2.json. The old city.json is
+imported only when no v2 city exists and remains preserved for the old app.
+Legacy links receive tier-two capacity and components receive commissioning
+buffers. Newly constructed cities begin with the expanded service/industrial
+starter layout. Existing city layouts and residents are retained on migration.
+
+ARCHITECTURAL LIMITS
+Freight and utilities use bounded routed forecasts, not vehicle agents, AC
+load-flow or hydraulic pressure. Ordinary service-bus pulses mean availability;
+the load overlays and kernel show numerical link dispatch. Labour markets are
+physical street components; individual journeys are abstracted. Shipment
+quantities and material tables show the next tick, not a historical flow meter.
+Warehouse goods do not carry provenance; export price is below import price.
+The sparse world remains open-ended; this release adds no win/lose conditions.
+
+PREVIOUS RELEASE VALIDATION
+
+YORU / TOKYO 2091 — native release 1.2 / TWO VIEWS OF ONE MACHINE
+Verified 31 October 2026 on macOS arm64.
+
+1.2 DIAGRAM AND SHARED CONTROLS: PASS
+- 133 standalone projection checks pass: established isometric geometry,
+  orthographic cells, ignored extrusion height in the diagram, negative tile
+  boundaries, pointer-anchored zoom, dragging, remote districts, and both canvas
+  layouts with and without the workbench.
+- --diagram-check passes at 1380 x 798 and 960 x 700 logical window sizes.
+  Checks perform construction through projected tile coordinates, connected
+  service strokes, physical plan placement and grouped undo. Repeated view
+  switches preserve the selected component and world camera. Each view's zoom
+  is retained separately. The serialized city returns exactly to its baseline
+  after undo and remains unchanged during all subsequent view operations.
+- Native checks exercise the white process floor, workbench, power/water
+  overlays, original Afterimage machine view, and switching back to the floor.
+- --render-check confirms the original machine optics and workbench still work.
+- Standard, small-window workbench and fitted whole-city overview screenshots
+  were visually inspected. Compact readings remain visible in the overview.
+- Diagram controls include real single-tick stepping and selected-component
+  framing. Optics/rain controls remain in the machine view where they apply.
+- The original City.cpp and Persistence.cpp are unchanged by this addition.
+  Both views share one City object, construction operations and save format.
+- diagram-preview.png shows a working-scale process floor; diagram-overview.png
+  shows the complete starter network. A direct diagram launcher is included.
+
+1.1 VERIFICATION (retained)
+Verified 31 October 2026 on macOS arm64.
+
+1.1 GRAPHICS AND INTEGRATION: PASS
+- Core simulation: all 51 existing city checks pass. City.cpp and the save schema
+  are unchanged by this visual update.
+- --render-check passes at 1380 x 798 and 960 x 700 logical window sizes.
+  Each run exercises 140 frames of machine view, floating workbench, calm optics,
+  electricity and water overlays, then returns to the machine view.
+- Every frame compares the complete serialized authored city to its initial
+  snapshot. Rendering, optical feedback and view changes do not mutate it.
+- GLSL shaders compile, native-resolution scene and float32 phase targets allocate,
+  and the bounded feedback, bloom and final filament passes render successfully.
+- Standard and small-window screenshots were visually inspected. Fine filaments
+  use full-precision coordinates; economy controls do not overlap view controls.
+- --ui-test --smoke passes actual construction, grouped undo, plan placement,
+  24 city ticks, save/load and service overlays in the new renderer.
+- Crisp component geometry, previews and UI retain the original picking chart.
+  UI is drawn after optical compositing and never circulates in feedback.
+- Previous app/source archives, preview and existing city/checkpoint files were
+  retained under build/before-city-machine-1.1/ before updating.
+- Neither AftertasteCpp nor Afterimage was edited. Existing Yoru saves remain
+  compatible, using the same independent YoruTokyo data directory.
+
+city-machine-preview.png and preview.png show the final native machine view.
+The --render-check screenshot option also exports workbench, calm and power
+diagnostic images alongside its main output.
+
+BASELINE 1.0 VERIFICATION (retained)
+Verified 31 October 2026 on macOS arm64.
+
+MODEL: PASS 51 checks (tests/CityTests.cpp), Release and Debug with AddressSanitizer
+and UndefinedBehaviorSanitizer. The macOS sanitizer run uses detect_leaks=0.
+- Physical street, electricity, water and rail connectivity; no power teleporting.
+- Any connected street frontage gives access, even with an isolated other frontage.
+- Power and water delivery remain within measured network supply.
+- Generators off -> electricity fails -> water pumps stop -> migration reverses.
+- Overloaded circuits ration capacity; independent districts remain independent.
+- Healthy homes grow to capacity; gardens improve local wellbeing.
+- Rail stations need a physical route to a city exchange to provide transit access.
+- Upgrades, economy debits, free construction, one-tick budget accounting.
+- Whole construction plans reject overlaps atomically and undo as a single edit.
+- River rejects buildings and accepts street bridges.
+- Save round-trip preserves authored state; invalid coordinates are rejected.
+- Atomic saves retain .bak; malformed originals remain untouched; recovery works.
+- Starter city has a working population and supplies; 300 subsequent ticks stay
+  finite and history length remains bounded.
+
+NATIVE APPLICATION: PASS scripted --ui-test at standard monitor-fitted window
+(1380 x 798 logical points on this display) and minimum window (960 x 700).
+Each performs real construction, undo, plan placement, 24 city ticks, save/load,
+and renders the power/water overlays before returning to the city view.
+Screenshots were visually inspected at both sizes. The inspector clips and scrolls
+separately from fixed city signals and the minimap. System TTC fonts load with
+the documented local raylib compatibility fix. Japanese signage renders properly.
+
+HANDS-ON: native computer-use checks confirmed on-screen plan button, plan dialog,
+held Escape/H keyboard events, guide readability, library selection, placement
+on clear ground, the corresponding inspector status and population capacity,
+and a visible physical power overlay. A hit-routing issue discovered during
+this pass was fixed: map controls now consume their clicks before construction
+or selection on the tile beneath. An explicit Undo button and U shortcut are
+also available. The final build repeated the scripted native checks afterward.
+
+preview.png is captured from the finished native application, not a mockup.
+All QA runs use isolated YORU_DATA_DIR folders beneath build/. No Aftertaste
+source, application or data was modified. App and source use no runtime reference
+to the original project. The application contains the dependency licenses.
+
+MODEL LIMITS
+Tokyo is fictional and compressed. Food distribution, workforce and taxes are
+city-scale abstractions; street and utility connectivity are physical graphs.
+Ambient vehicles/rain and flow markers illustrate the model, not a microscopic
+traffic or fluid simulation. The game is open ended, with all systems unlocked.
