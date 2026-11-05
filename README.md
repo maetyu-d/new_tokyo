@@ -4,6 +4,22 @@ An open-ended cyberpunk city builder set in Tokyo, built around **city as machin
 
 Version **1.26.0** is a native C++17 application using bundled raylib and nlohmann/json. It has an optical machine view and a shared top-down diagram view. The expanded demo spans **154 × 70 tiles**, with **2,592 buildings**, **60,916 initial residents** and an **L0–L12** skyline.
 
+## Screenshots
+
+The expanded demo from the same camera angle in both graphics modes, followed by the level-six floor plan. RGB phosphor is a preview from v1.27.
+
+### Original optics
+
+![The expanded skyline in Original optics, with glowing towers and elevated walkways](docs/screenshots/original-optics.webp)
+
+### RGB phosphor
+
+![The same skyline in RGB phosphor, with primary colours and vertical CRT stripes](docs/screenshots/rgb-phosphor.webp)
+
+### Diagram view
+
+![The level-six diagram showing four quarters linked by skyways](docs/screenshots/diagram-view.webp)
+
 ## Building and playing
 
 - **Tab / Build** opens the construction catalogue; **/** focuses quick search. Search buildings, roads, utilities, lifts, bridges, structural parts and reusable plans. Use **Up / Down** and **Enter** to select.
